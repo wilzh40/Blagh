@@ -9,7 +9,7 @@
 import UIKit
 import Parse
 import CCInfiniteScrolling
-class UserVC: UIViewController {
+class UserVC: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()

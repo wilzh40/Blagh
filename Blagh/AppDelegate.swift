@@ -9,6 +9,7 @@
 
 import UIKit
 import DrawerController
+import AMScrollingNavbar
 import Parse
 
 // If you want to use any of the UI components, uncomment this line
@@ -25,6 +26,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         self.window = UIWindow()
+        SwiftSpinner.show("Initializing...")
+
         
         // Enable storing and querying data from Local Datastore.
         // Remove this line if you don't want to use Local Datastore features or want to use cachePolicy.
@@ -85,7 +88,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         let storyBoard = UIStoryboard(name: "Main", bundle: nil)
         
-        let center = storyBoard.instantiateViewControllerWithIdentifier("CenterVC")
+        let center = ScrollingNavigationController(rootViewController: storyBoard.instantiateViewControllerWithIdentifier("CenterVC"));
         
         let left = UINavigationController(rootViewController:UserVC())
         let right = UINavigationController(rootViewController:SettingsVC())
@@ -107,7 +110,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         drawerCon.closeDrawerGestureModeMask = CloseDrawerGestureMode.PanningCenterView
         self.window?.rootViewController = drawerCon
         self.window?.makeKeyAndVisible()
-        //  SwiftSpinner.show("Initializing...")
         
         
         

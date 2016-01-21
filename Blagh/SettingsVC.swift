@@ -9,7 +9,7 @@
 import UIKit
 import Parse
 import CCInfiniteScrolling
-class SettingsVC: UIViewController {
+class SettingsVC: UITableViewController {
 
     
     override func viewDidLoad() {

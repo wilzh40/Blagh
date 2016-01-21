@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		4C5D25B46C2AC69095A69689 /* Pods_Blagh.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E38BDA17BE5EC022DED8363C /* Pods_Blagh.framework */; };
+		77C4D3321C5157700082168B /* TextEditorVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C4D3311C51576F0082168B /* TextEditorVC.swift */; };
+		77C4D3341C516B2F0082168B /* Singleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C4D3331C516B2F0082168B /* Singleton.swift */; };
 		77E2AE091C50A88E006EE318 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E2AE081C50A88E006EE318 /* AppDelegate.swift */; };
 		77E2AE0B1C50A88E006EE318 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E2AE0A1C50A88E006EE318 /* ViewController.swift */; };
 		77E2AE0E1C50A88E006EE318 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 77E2AE0C1C50A88E006EE318 /* Main.storyboard */; };
@@ -41,6 +43,8 @@
 
 /* Begin PBXFileReference section */
 		61EACAFA28E3083EA7388738 /* Pods-Blagh.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Blagh.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Blagh/Pods-Blagh.debug.xcconfig"; sourceTree = "<group>"; };
+		77C4D3311C51576F0082168B /* TextEditorVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextEditorVC.swift; sourceTree = "<group>"; };
+		77C4D3331C516B2F0082168B /* Singleton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Singleton.swift; sourceTree = "<group>"; };
 		77E2AE051C50A88E006EE318 /* Blagh.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Blagh.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		77E2AE081C50A88E006EE318 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		77E2AE0A1C50A88E006EE318 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -166,6 +170,7 @@
 		77E2AE3B1C50A93D006EE318 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				77C4D3331C516B2F0082168B /* Singleton.swift */,
 			);
 			name = Core;
 			sourceTree = "<group>";
@@ -174,6 +179,7 @@
 			isa = PBXGroup;
 			children = (
 				77E2AE411C50A9B4006EE318 /* CenterVC.swift */,
+				77C4D3311C51576F0082168B /* TextEditorVC.swift */,
 				77E2AE3F1C50A9AE006EE318 /* SettingsVC.swift */,
 				77E2AE3D1C50A9AA006EE318 /* UserVC.swift */,
 			);
@@ -371,7 +377,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				77E2AE0B1C50A88E006EE318 /* ViewController.swift in Sources */,
+				77C4D3341C516B2F0082168B /* Singleton.swift in Sources */,
 				77E2AE3E1C50A9AA006EE318 /* UserVC.swift in Sources */,
+				77C4D3321C5157700082168B /* TextEditorVC.swift in Sources */,
 				77E2AE091C50A88E006EE318 /* AppDelegate.swift in Sources */,
 				77E2AE391C50A92A006EE318 /* ImageLoader.swift in Sources */,
 				77E2AE421C50A9B4006EE318 /* CenterVC.swift in Sources */,
