@@ -13,7 +13,7 @@ import CCInfiniteScrolling
 import AMScrollingNavbar
 class CenterVC: UITableViewController {
     let singleton:Singleton = Singleton.sharedInstance
-    var tableData:NSMutableArray = ["1","2","3","4","5","6","e","a","b","c"]
+    var tableData:NSMutableArray = []
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -22,14 +22,32 @@ class CenterVC: UITableViewController {
             navigationController.followScrollView(tableView, delay: 50.0)
             navigationController.title = "BLAGH"
         }
+        
+        let barButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: Selector("addPost"))
+        self.navigationItem.setRightBarButtonItem(barButton, animated: true)
+
         self.tableView.reloadData()
 
+    }
+    
+    func addPost() {
+//        let storyBoard = UIStoryboard(name: "Main", bundle: nil)
+//
+//        let textEditorVC = ScrollingNavigationController(rootViewController: storyBoard.instantiateViewControllerWithIdentifier("TextEditorVC"));
+//        presentViewController(textEditorVC, animated: true, completion: nil)
+        var post = PFObject(className: "Post")
+        post["text"] = "No text here"
+        post["title"] = "Untitled"
+        post["published"] = false
+        tableData.addObject(post)
+        
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let cell: UITableViewCell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "protoCell")

@@ -13,6 +13,9 @@ pod 'CCInfiniteScrolling'
 pod 'DrawerController'
 pod 'Parse'
 pod 'AMScrollingNavbar', '~> 2.0.1'
+# pod 'ZSSRichTextEditor'
+pod 'RichEditorView'
+
 
 end
 
