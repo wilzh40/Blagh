@@ -10,6 +10,8 @@ import UIKit
 import AVFoundation
 import AVKit
 import CoreData
+import Parse
+
 
 @objc protocol SavedSongsDelegate {
     optional func reloadData()
@@ -19,9 +21,13 @@ import CoreData
 class Singleton {
     var delegate: SavedSongsDelegate?
     
-     func setupData() {
+    var currentBlog: PFObject?
+    var currentPost: PFObject?
+    
+    func setupData() {
+        // Retrieve Blogs
         
-      }
+    }
     
     func saveData() {
     

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4C5D25B46C2AC69095A69689 /* Pods_Blagh.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E38BDA17BE5EC022DED8363C /* Pods_Blagh.framework */; };
+		77AFAC801C53F887008FC89C /* GenericTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77AFAC7F1C53F887008FC89C /* GenericTable.swift */; };
 		77C4D3321C5157700082168B /* TextEditorVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C4D3311C51576F0082168B /* TextEditorVC.swift */; };
 		77C4D3341C516B2F0082168B /* Singleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C4D3331C516B2F0082168B /* Singleton.swift */; };
 		77C4D3361C517CA60082168B /* KeyboardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C4D3351C517CA60082168B /* KeyboardManager.swift */; };
@@ -44,6 +45,7 @@
 
 /* Begin PBXFileReference section */
 		61EACAFA28E3083EA7388738 /* Pods-Blagh.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Blagh.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Blagh/Pods-Blagh.debug.xcconfig"; sourceTree = "<group>"; };
+		77AFAC7F1C53F887008FC89C /* GenericTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenericTable.swift; sourceTree = "<group>"; };
 		77C4D3311C51576F0082168B /* TextEditorVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextEditorVC.swift; sourceTree = "<group>"; };
 		77C4D3331C516B2F0082168B /* Singleton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Singleton.swift; sourceTree = "<group>"; };
 		77C4D3351C517CA60082168B /* KeyboardManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardManager.swift; sourceTree = "<group>"; };
@@ -181,6 +183,7 @@
 			isa = PBXGroup;
 			children = (
 				77E2AE411C50A9B4006EE318 /* CenterVC.swift */,
+				77AFAC7F1C53F887008FC89C /* GenericTable.swift */,
 				77C4D3351C517CA60082168B /* KeyboardManager.swift */,
 				77C4D3311C51576F0082168B /* TextEditorVC.swift */,
 				77E2AE3F1C50A9AE006EE318 /* SettingsVC.swift */,
@@ -388,6 +391,7 @@
 				77E2AE391C50A92A006EE318 /* ImageLoader.swift in Sources */,
 				77E2AE421C50A9B4006EE318 /* CenterVC.swift in Sources */,
 				77E2AE381C50A92A006EE318 /* SwiftSpinner.swift in Sources */,
+				77AFAC801C53F887008FC89C /* GenericTable.swift in Sources */,
 				77E2AE401C50A9AE006EE318 /* SettingsVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

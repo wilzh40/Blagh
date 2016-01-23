@@ -11,9 +11,8 @@ import UIKit
 import Parse
 import CCInfiniteScrolling
 import AMScrollingNavbar
-class CenterVC: UITableViewController {
+class CenterVC: GenericTable {
     let singleton:Singleton = Singleton.sharedInstance
-    var tableData:NSMutableArray = []
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -31,16 +30,29 @@ class CenterVC: UITableViewController {
     }
     
     func addPost() {
-//        let storyBoard = UIStoryboard(name: "Main", bundle: nil)
-//
-//        let textEditorVC = ScrollingNavigationController(rootViewController: storyBoard.instantiateViewControllerWithIdentifier("TextEditorVC"));
-//        presentViewController(textEditorVC, animated: true, completion: nil)
+
         var post = PFObject(className: "Post")
         post["text"] = "No text here"
         post["title"] = "Untitled"
         post["published"] = false
-        tableData.addObject(post)
+        tableData.insertObject(post, atIndex: 0)
+        newPostAnimated = false
         
+        //Save data
+        post.saveInBackgroundWithBlock {
+            (success: Bool, error: NSError?) -> Void in
+            if (success) {
+                print("Saved Post")
+            } else {
+                // There was a problem, check error.description
+            }
+        }
+        
+//        for p in tableData {
+//            let indexPaths = NSMutableArray()
+//            indexPaths.addObject(
+//        }
+        self.tableView.reloadData()
     }
     
     override func didReceiveMemoryWarning() {
@@ -49,9 +61,9 @@ class CenterVC: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        
+        let post: PFObject = (tableData[indexPath.row] as? PFObject)!
         let cell: UITableViewCell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "protoCell")
-        cell.textLabel?.text = tableData[indexPath.row] as? String
+        cell.textLabel?.text = post["title"] as? String
         cell.textLabel?.font = UIFont(name:"Futura",size:11.00)
         cell.textLabel?.lineBreakMode = NSLineBreakMode.ByWordWrapping
         cell.textLabel?.numberOfLines = 2
@@ -69,6 +81,16 @@ class CenterVC: UITableViewController {
         // cell.layer.rasterizationScale = UIScreen.mainScreen().scale
         
         return cell
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        print("You selected cell #\(indexPath.row)!")
+        Singleton.sharedInstance.currentPost = tableData[indexPath.row] as? PFObject
+        // Get Cell Label
+        let storyBoard = UIStoryboard(name: "Main", bundle: nil)
+        let textEditorVC = ScrollingNavigationController(rootViewController: storyBoard.instantiateViewControllerWithIdentifier("TextEditorVC"));
+
+       self.navigationController!.pushViewController(textEditorVC, animated: true)
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
