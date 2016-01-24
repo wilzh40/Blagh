@@ -91,7 +91,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         //load data
         
-        Singleton.sharedInstance.setupData()
+       // Singleton.sharedInstance.setupData()
         
         
         

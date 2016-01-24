@@ -23,10 +23,18 @@ class PostEditorVC : GenericTable {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.newPostAnimated = false
+        if let currentPost = Singleton.sharedInstance.currentPost {
+            tableData = NSMutableArray(array: (currentPost["elements"] as? [PFObject])!)
+        }
+        
+        SwiftSpinner.show("Loading Post")
+
         segmentedControl = HMSegmentedControl(sectionTitles: ["Text","Image","Video"])
         let frame = UIScreen.mainScreen().bounds
         segmentedControl!.frame = CGRectMake(frame.minX + 10, frame.maxY - 50,
             frame.width - 20, frame.height*0.1)
+        view.addSubview(segmentedControl!)
         
         let barButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: Selector("addElement"))
         self.navigationItem.setRightBarButtonItem(barButton, animated: true)
@@ -34,19 +42,31 @@ class PostEditorVC : GenericTable {
         // Config height
         tableView.estimatedRowHeight = 44.0
         tableView.rowHeight = UITableViewAutomaticDimension
+        
+        SwiftSpinner.hide()
+      
 
     }
+   
     func addElement() {
         
         var element = PFObject(className: "Element")
         element["type"] = segmentedControl?.selectedSegmentIndex
         element["text"] = "Click to edit\n Helphelpehlehelehhep im dyinnnngggggg"
-        elements.append(element)
+        tableData.addObject(element)
+        
+        if let currentPost = Singleton.sharedInstance.currentPost {
+            if var postElements : [PFObject] = currentPost["elements"] as? [PFObject]  {
+                postElements.append(element)
+                currentPost["elements"] = postElements
+                currentPost.saveInBackground()
+            }
+        }
         //Save data
         element.saveInBackgroundWithBlock {
             (success: Bool, error: NSError?) -> Void in
             if (success) {
-                print("Saved Post")
+                print("Saved Element")
             } else {
                 // There was a problem, check error.description
             }
@@ -72,11 +92,11 @@ class PostEditorVC : GenericTable {
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int  {
-        return elements.count
+        return tableData.count
     }
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell: UITableViewCell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "protoCell")
-        let element = elements[indexPath.row]
+        let element = tableData[indexPath.row]
         switch element["type"] as! Int {
             case elementType.image.rawValue:
               

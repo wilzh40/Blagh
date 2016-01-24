@@ -8,10 +8,16 @@
 
 import Foundation
 import UIKit
-class GenericTable : UITableViewController {
+class GenericTable : UITableViewController, DataDelegate  {
     var tableData: NSMutableArray = []
     var newPostAnimated: Bool = false
 
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        Singleton.sharedInstance.delegate = self
+    }
+    
+    // Animation function
     override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         if indexPath.row == tableData.count - 1 && !newPostAnimated {
             newPostAnimated = true
@@ -24,5 +30,18 @@ class GenericTable : UITableViewController {
                     })
             })
         }
+    }
+    
+    // Data for delegate
+    func reloadData(data: NSMutableArray) {
+        
+        self.tableData = data
+        SwiftSpinner.hide()
+        self.tableView.reloadData()
+        
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        self.tableView.reloadData()
     }
 }

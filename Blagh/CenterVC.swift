@@ -11,11 +11,12 @@ import UIKit
 import Parse
 import CCInfiniteScrolling
 import AMScrollingNavbar
-class CenterVC: GenericTable, PostsDelegate {
+class CenterVC: GenericTable {
     let singleton:Singleton = Singleton.sharedInstance
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        Singleton.sharedInstance.loadPosts()
         SwiftSpinner.show("Loading Posts")
         if let navigationController = self.navigationController as? ScrollingNavigationController {
             navigationController.followScrollView(tableView, delay: 50.0)
@@ -24,19 +25,12 @@ class CenterVC: GenericTable, PostsDelegate {
         
         let barButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: Selector("addPost"))
         self.navigationItem.setRightBarButtonItem(barButton, animated: true)
-        
-        Singleton.sharedInstance.delegate = self
+
         self.tableView.reloadData()
 
     }
     
-    func reloadData(data: NSMutableArray) {
-
-        self.tableData = data
-        SwiftSpinner.hide()
-        self.tableView.reloadData()
-    
-    }
+   
     
     func addPost() {
 

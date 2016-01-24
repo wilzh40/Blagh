@@ -12,18 +12,20 @@ import AVKit
 import CoreData
 import Parse
 
-@objc protocol PostsDelegate {
+@objc protocol DataDelegate {
     optional func reloadData(data:NSMutableArray)
+
 }
 
 
 class Singleton {
-    var delegate: PostsDelegate?
+    var delegate: DataDelegate?
     
     var currentBlog: PFObject?
     var currentPost: PFObject?
+
     
-    func setupData() {
+    func loadPosts() {
         // Retrieve Blogs
         
         // Retrieve Posts
@@ -42,6 +44,27 @@ class Singleton {
                     for object in objects {
                         print(object.objectId)
                     }
+                    self.delegate?.reloadData!(NSMutableArray(array: objects))
+                }
+            } else {
+                // Log details of the failure
+                print("Error: \(error!) \(error!.userInfo)")
+            }
+        }
+
+    }
+    
+    func loadElements() {
+        //Loading Elements
+        var query = PFQuery(className:"Elements")
+        query.findObjectsInBackgroundWithBlock {
+            (objects: [PFObject]?, error: NSError?) -> Void in
+            
+            if error == nil {
+                // The find succeeded.
+                print("Successfully retrieved \(objects!.count) scores.")
+                // Do something with the found objects
+                if let objects = objects {
                     self.delegate?.reloadData!(NSMutableArray(array: objects))
                 }
             } else {
