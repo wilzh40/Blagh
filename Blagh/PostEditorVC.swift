@@ -33,8 +33,10 @@ class PostEditorVC : GenericTable {
 
         segmentedControl = HMSegmentedControl(sectionTitles: ["Text","Image","Video"])
         let frame = UIScreen.mainScreen().bounds
-        segmentedControl!.frame = CGRectMake(frame.minX + 10, frame.maxY - 50,
-            frame.width - 20, frame.height*0.1)
+        segmentedControl!.frame = CGRectMake(frame.minX + 10, frame.maxY - 60,
+            frame.width - 20, 60)
+        self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 60, 0);
+
         view.addSubview(segmentedControl!)
         
         let barButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: Selector("addElement"))
@@ -84,9 +86,16 @@ class PostEditorVC : GenericTable {
         
     }
 
-    override func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        return segmentedControl
-        
+//    override func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+//        return segmentedControl
+//        
+//
+//    }
+    override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.bringSubviewToFront(segmentedControl!)
+    }
+    override func scrollViewDidScroll(scrollView: UIScrollView) {
+        segmentedControl!.transform = CGAffineTransformMakeTranslation(0, scrollView.contentOffset.y);
 
     }
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int  {
