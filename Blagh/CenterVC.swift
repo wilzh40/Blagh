@@ -39,13 +39,14 @@ class CenterVC: GenericTable {
         post["title"] = "Untitled"
         post["published"] = false
         post["elements"] = []
-        tableData.insertObject(post, atIndex: 0)
         newPostAnimated = false
         
         //Save data
         post.saveInBackgroundWithBlock {
             (success: Bool, error: NSError?) -> Void in
             if (success) {
+                
+                self.tableData.insertObject(post, atIndex: 0)
                 print("Saved Post")
             } else {
                 // There was a problem, check error.description
@@ -68,7 +69,20 @@ class CenterVC: GenericTable {
         let post: PFObject = (tableData[indexPath.row] as? PFObject)!
         let cell: UITableViewCell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "protoCell")
         cell.textLabel?.text = post["title"] as? String
-        cell.textLabel?.font = UIFont(name:"Futura",size:11.00)
+        cell.textLabel?.font = UIFont(name:"Futura",size:12.00)
+        
+  
+        
+        let D = NSDateFormatter()
+        D.dateFormat = "MM-dd HH:mm"
+        // Prints the date
+        if let date : NSDate = post.updatedAt {
+            cell.detailTextLabel?.text = "Updated at: \(D.stringFromDate(date))"
+        } else {
+            cell.detailTextLabel?.text = "Created at:\(D.stringFromDate(post.createdAt!))"
+        }
+        cell.detailTextLabel?.font = UIFont(name:"Futura",size:9.00)
+        cell.detailTextLabel?.alpha = 0.4
         cell.textLabel?.lineBreakMode = NSLineBreakMode.ByWordWrapping
         cell.textLabel?.numberOfLines = 2
         
