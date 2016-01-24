@@ -46,7 +46,7 @@ class TextEditorVC: UIViewController, RichEditorDelegate, RichEditorToolbarDeleg
         
         // Done button
         
-        let barButton = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: Selector("addPost"))
+        let barButton = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: Selector("done"))
         self.navigationItem.setRightBarButtonItem(barButton, animated: true)
         // Set title
         
@@ -59,9 +59,10 @@ class TextEditorVC: UIViewController, RichEditorDelegate, RichEditorToolbarDeleg
         editorView.setHTML((element["text"] as? String)!)
 
     }
-    override func viewWillDisappear(animated: Bool) {
+    func done (){
         element["text"] = editorView.contentHTML
         element.pinInBackground()
+        self.navigationController?.popViewControllerAnimated(true)
     }
     
 }

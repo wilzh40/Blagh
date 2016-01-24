@@ -25,9 +25,36 @@ class ElementCell : UITableViewCell {
     }
 }
 
-class TextCell: ElementCell {
+class TextCell: ElementCell, UIWebViewDelegate {
+    let webView: UIWebView = UIWebView()
     override func loadItem(data: String) {
-        textLabel?.text = data
+        //textLabel?.text = data
+        webView.frame = self.bounds
+        webView.delegate = self
+        webView.scalesPageToFit = false
+        webView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+        webView.dataDetectorTypes = .None
+        webView.backgroundColor = UIColor.clearColor()
+        webView.scrollView.scrollEnabled = false
+        webView.scrollView.bounces = false
+        webView.scrollView.clipsToBounds = false
+        webView.loadHTMLString(data, baseURL: nil)
+        webView.userInteractionEnabled = false
+        webView.opaque = false
+        
+        self.alpha = 0.3;
+        self.addSubview(webView)
+    }
+    func webView(webView: UIWebView, shouldStartLoadWithRequest request: NSURLRequest, navigationType: UIWebViewNavigationType) -> Bool {
+        webView.alpha = 0.1
+        return true
+    }
+    func webViewDidFinishLoad(webView: UIWebView) {
+        UIView.animateWithDuration(0.3, animations:{
+            self.alpha = 1;
+            webView.alpha = 1
+        })
+
     }
 }
 

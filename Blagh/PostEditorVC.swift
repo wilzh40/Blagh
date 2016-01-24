@@ -55,7 +55,7 @@ class PostEditorVC : GenericTable {
         
         var element = PFObject(className: "Element")
         element["type"] = segmentedControl?.selectedSegmentIndex
-        element["text"] = "Click to edit\n Helphelpehlehelehhep im dyinnnngggggg"
+        element["text"] = "Click to edit\n Helphelpehlehelehhep im dyinnnnggggggn    diajfsidfjia test"
         element["post"] = Singleton.sharedInstance.currentPost?.objectId
         tableData.addObject(element)
         
@@ -106,13 +106,12 @@ class PostEditorVC : GenericTable {
         return tableData.count
     }
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell: UITableViewCell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "protoCell")
+        var cell: ElementCell = ElementCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "protoCell")
         let element = tableData[indexPath.row]
         switch element["type"] as! Int {
             case 0:
-                cell.textLabel!.text = element["text"] as? String
-                cell.textLabel!.numberOfLines = 0;
-              
+                cell = TextCell()
+                
                 
             
             break
@@ -122,7 +121,7 @@ class PostEditorVC : GenericTable {
             
             
         }
-       
+        cell.loadItem(element["text"] as! String)
         return cell
     }
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
