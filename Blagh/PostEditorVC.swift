@@ -25,7 +25,8 @@ class PostEditorVC : GenericTable {
         super.viewDidLoad()
         self.newPostAnimated = false
         if let currentPost = Singleton.sharedInstance.currentPost {
-            tableData = NSMutableArray(array: (currentPost["elements"] as? [PFObject])!)
+            Singleton.sharedInstance.loadElements()
+            //tableData = NSMutableArray(array: (currentPost["elements"] as? [PFObject])!)
         }
         
         SwiftSpinner.show("Loading Post")
@@ -43,7 +44,7 @@ class PostEditorVC : GenericTable {
         tableView.estimatedRowHeight = 44.0
         tableView.rowHeight = UITableViewAutomaticDimension
         
-        SwiftSpinner.hide()
+      //  SwiftSpinner.hide()
       
 
     }
@@ -53,6 +54,7 @@ class PostEditorVC : GenericTable {
         var element = PFObject(className: "Element")
         element["type"] = segmentedControl?.selectedSegmentIndex
         element["text"] = "Click to edit\n Helphelpehlehelehhep im dyinnnngggggg"
+        element["post"] = Singleton.sharedInstance.currentPost?.objectId
         tableData.addObject(element)
         
         if let currentPost = Singleton.sharedInstance.currentPost {

@@ -56,13 +56,16 @@ class Singleton {
     
     func loadElements() {
         //Loading Elements
-        var query = PFQuery(className:"Elements")
+        var query = PFQuery(className:"Element")
+       // query.includeKey("type")
+        query.whereKey("post", equalTo:(currentPost?.objectId)!)
         query.findObjectsInBackgroundWithBlock {
             (objects: [PFObject]?, error: NSError?) -> Void in
             
             if error == nil {
                 // The find succeeded.
-                print("Successfully retrieved \(objects!.count) scores.")
+                print(self.currentPost?.objectId)
+                print("Successfully retrieved \(objects!.count) elements.")
                 // Do something with the found objects
                 if let objects = objects {
                     self.delegate?.reloadData!(NSMutableArray(array: objects))
