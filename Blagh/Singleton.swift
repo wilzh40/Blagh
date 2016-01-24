@@ -12,14 +12,13 @@ import AVKit
 import CoreData
 import Parse
 
-
-@objc protocol SavedSongsDelegate {
-    optional func reloadData()
+@objc protocol PostsDelegate {
+    optional func reloadData(data:NSMutableArray)
 }
 
 
 class Singleton {
-    var delegate: SavedSongsDelegate?
+    var delegate: PostsDelegate?
     
     var currentBlog: PFObject?
     var currentPost: PFObject?
@@ -27,12 +26,35 @@ class Singleton {
     func setupData() {
         // Retrieve Blogs
         
+        // Retrieve Posts
+        var query = PFQuery(className:"Post")
+        query.findObjectsInBackgroundWithBlock {
+            (objects: [PFObject]?, error: NSError?) -> Void in
+            
+            if error == nil {
+                // The find succeeded.
+                print("Successfully retrieved \(objects!.count) scores.")
+                // Do something with the found objects
+                if let objects = objects {
+                    objects.sort{a,b in
+                           return a.updatedAt?.timeIntervalSinceReferenceDate < b.updatedAt?.timeIntervalSinceReferenceDate
+                    }
+                    for object in objects {
+                        print(object.objectId)
+                    }
+                    self.delegate?.reloadData!(NSMutableArray(array: objects))
+                }
+            } else {
+                // Log details of the failure
+                print("Error: \(error!) \(error!.userInfo)")
+            }
+        }
+
     }
     
     func saveData() {
     
     }
-    
     
     class var sharedInstance : Singleton {
         struct Static {

@@ -15,7 +15,9 @@ pod 'Parse'
 pod 'AMScrollingNavbar', '~> 2.0.1'
 # pod 'ZSSRichTextEditor'
 pod 'RichEditorView'
+pod 'XLForm'
 
+pod 'HMSegmentedControl'
 
 end
 

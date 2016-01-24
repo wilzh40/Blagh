@@ -29,6 +29,7 @@ class TextEditorVC: UIViewController, RichEditorDelegate, RichEditorToolbarDeleg
         editorView.delegate = self
         editorView.inputAccessoryView = toolbar
         
+        
         toolbar.delegate = self
         toolbar.editor = editorView
         
@@ -40,6 +41,18 @@ class TextEditorVC: UIViewController, RichEditorDelegate, RichEditorToolbarDeleg
         var options = toolbar.options
         options.append(item)
         toolbar.options = options
+        
+        // Done button
+        
+        let barButton = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: Selector("addPost"))
+        self.navigationItem.setRightBarButtonItem(barButton, animated: true)
+        // Set title
+        
+        if let navigationController = self.navigationController {
+            
+            navigationController.title = Singleton.sharedInstance.currentPost!["title"] as? String
+        }
+
     }
     
 }

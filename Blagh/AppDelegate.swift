@@ -26,6 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         self.window = UIWindow()
+
         SwiftSpinner.show("Initializing...")
 
         
@@ -86,6 +87,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let types: UIRemoteNotificationType = [.Alert, .Badge, .Sound]
             application.registerForRemoteNotificationTypes(types)
         }
+        
+        
+        //load data
+        
+        Singleton.sharedInstance.setupData()
+        
+        
+        
+        
+        
         let storyBoard = UIStoryboard(name: "Main", bundle: nil)
         
         let center = ScrollingNavigationController(rootViewController: storyBoard.instantiateViewControllerWithIdentifier("CenterVC"));

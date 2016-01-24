@@ -11,12 +11,12 @@ import UIKit
 import Parse
 import CCInfiniteScrolling
 import AMScrollingNavbar
-class CenterVC: GenericTable {
+class CenterVC: GenericTable, PostsDelegate {
     let singleton:Singleton = Singleton.sharedInstance
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        SwiftSpinner.hide()
+        SwiftSpinner.show("Loading Posts")
         if let navigationController = self.navigationController as? ScrollingNavigationController {
             navigationController.followScrollView(tableView, delay: 50.0)
             navigationController.title = "BLAGH"
@@ -24,9 +24,18 @@ class CenterVC: GenericTable {
         
         let barButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: Selector("addPost"))
         self.navigationItem.setRightBarButtonItem(barButton, animated: true)
-
+        
+        Singleton.sharedInstance.delegate = self
         self.tableView.reloadData()
 
+    }
+    
+    func reloadData(data: NSMutableArray) {
+
+        self.tableData = data
+        SwiftSpinner.hide()
+        self.tableView.reloadData()
+    
     }
     
     func addPost() {
@@ -35,6 +44,7 @@ class CenterVC: GenericTable {
         post["text"] = "No text here"
         post["title"] = "Untitled"
         post["published"] = false
+        post["elements"] = []
         tableData.insertObject(post, atIndex: 0)
         newPostAnimated = false
         
@@ -47,8 +57,8 @@ class CenterVC: GenericTable {
                 // There was a problem, check error.description
             }
         }
-        
-//        for p in tableData {
+
+     //        for p in tableData {
 //            let indexPaths = NSMutableArray()
 //            indexPaths.addObject(
 //        }
@@ -88,9 +98,9 @@ class CenterVC: GenericTable {
         Singleton.sharedInstance.currentPost = tableData[indexPath.row] as? PFObject
         // Get Cell Label
         let storyBoard = UIStoryboard(name: "Main", bundle: nil)
-        let textEditorVC = ScrollingNavigationController(rootViewController: storyBoard.instantiateViewControllerWithIdentifier("TextEditorVC"));
+        let textEditorVC = storyBoard.instantiateViewControllerWithIdentifier("TextEditorVC");
 
-       self.navigationController!.pushViewController(textEditorVC, animated: true)
+       self.navigationController?.pushViewController(PostEditorVC(),animated: true)
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
