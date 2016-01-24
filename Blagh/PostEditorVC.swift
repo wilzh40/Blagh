@@ -109,7 +109,9 @@ class PostEditorVC : GenericTable {
         let cell: UITableViewCell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "protoCell")
         let element = tableData[indexPath.row]
         switch element["type"] as! Int {
-            case elementType.image.rawValue:
+            case 0:
+                cell.textLabel!.text = element["text"] as? String
+                cell.textLabel!.numberOfLines = 0;
               
                 
             
@@ -120,9 +122,25 @@ class PostEditorVC : GenericTable {
             
             
         }
-        cell.textLabel!.text = element["text"] as? String
-        cell.textLabel!.numberOfLines = 0;
+       
         return cell
+    }
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let element = tableData[indexPath.row]
+        switch element["type"] as! Int {
+        case 0:
+            let storyBoard = UIStoryboard(name: "Main", bundle: nil)
+            let textEditorVC = storyBoard.instantiateViewControllerWithIdentifier("TextEditorVC") as! TextEditorVC
+            textEditorVC.element = element as? PFObject
+            self.navigationController?.pushViewController(textEditorVC, animated: true)
+            
+            
+            
+            break
+        default:
+            break
+        }
+
     }
     
   

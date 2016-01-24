@@ -105,8 +105,7 @@ class CenterVC: GenericTable {
         print("You selected cell #\(indexPath.row)!")
         Singleton.sharedInstance.currentPost = tableData[indexPath.row] as? PFObject
         // Get Cell Label
-        let storyBoard = UIStoryboard(name: "Main", bundle: nil)
-        let textEditorVC = storyBoard.instantiateViewControllerWithIdentifier("TextEditorVC");
+        
 
        self.navigationController?.pushViewController(PostEditorVC(),animated: true)
     }

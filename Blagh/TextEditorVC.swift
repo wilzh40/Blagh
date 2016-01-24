@@ -23,6 +23,8 @@ class TextEditorVC: UIViewController, RichEditorDelegate, RichEditorToolbarDeleg
         return toolbar
     }()
     
+    var element: PFObject!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -48,11 +50,18 @@ class TextEditorVC: UIViewController, RichEditorDelegate, RichEditorToolbarDeleg
         self.navigationItem.setRightBarButtonItem(barButton, animated: true)
         // Set title
         
-        if let navigationController = self.navigationController {
-            
-            navigationController.title = Singleton.sharedInstance.currentPost!["title"] as? String
-        }
+//        if let navigationController = self.navigationController {
+//            
+//            navigationController.title = Singleton.sharedInstance.currentPost!["title"] as? String
+//        }
+        
+        //Load element data
+        editorView.setHTML((element["text"] as? String)!)
 
+    }
+    override func viewWillDisappear(animated: Bool) {
+        element["text"] = editorView.contentHTML
+        element.pinInBackground()
     }
     
 }
