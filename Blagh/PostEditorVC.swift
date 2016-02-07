@@ -22,6 +22,7 @@ class PostEditorVC : GenericTable {
     }
     
     override func viewDidLoad() {
+        self.draggable = true
         super.viewDidLoad()
         self.newPostAnimated = false
         if let currentPost = Singleton.sharedInstance.currentPost {
@@ -46,12 +47,22 @@ class PostEditorVC : GenericTable {
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 150.0
 
+        
         //tableView.setNeedsLayout()
         //tableView.layoutIfNeeded()
         
       //  SwiftSpinner.hide()
       
 
+    }
+    override func saveData() {
+        if let currentPost = Singleton.sharedInstance.currentPost {
+            if let postElements : [PFObject] = currentPost["elements"] as? [PFObject]  {
+                currentPost["elements"] = postElements
+                currentPost.saveInBackground()
+            }
+        }
+        
     }
    
     func addElement() {
@@ -65,8 +76,7 @@ class PostEditorVC : GenericTable {
         if let currentPost = Singleton.sharedInstance.currentPost {
             if var postElements : [PFObject] = currentPost["elements"] as? [PFObject]  {
                 postElements.append(element)
-                currentPost["elements"] = postElements
-                currentPost.saveInBackground()
+               
             }
         }
         //Save data
@@ -81,7 +91,7 @@ class PostEditorVC : GenericTable {
         
         self.tableView.reloadData()
     }
-    
+
   
     override func viewDidAppear(animated: Bool) {
         
@@ -152,6 +162,26 @@ class PostEditorVC : GenericTable {
         tableData.insertObject(itemToMove, atIndex: toIndexPath.row)
     }
 
+    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return true
+    }
+    
+    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if editingStyle == .Delete {
+            tableData.removeObjectAtIndex(indexPath.row)
+            if let currentPost = Singleton.sharedInstance.currentPost {
+                if var postElements : [PFObject] = currentPost["elements"] as? [PFObject]  {
+                    postElements.removeAtIndex(indexPath.row)
+                    currentPost["elements"] = postElements
+                    currentPost.saveInBackground()
+                }
+            }
+            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+            
+            
+        }
+        
+    }
     
   
 }

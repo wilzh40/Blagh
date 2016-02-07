@@ -30,7 +30,8 @@ class ElementCell : UITableViewCell {
 }
 
 class TextCell: ElementCell, UIWebViewDelegate, MDHTMLLabelDelegate {
-    @IBOutlet var htmlLabel: MDHTMLLabel!
+    //@IBOutlet var htmlLabel: MDHTMLLabel!
+
     
 
     override func loadItem(data: String) {
@@ -50,11 +51,10 @@ class TextCell: ElementCell, UIWebViewDelegate, MDHTMLLabelDelegate {
         
         self.alpha = 0.3;
         self.addSubview(webView)*/
-        
-        htmlLabel = MDHTMLLabel(frame: self.bounds)
+        let frame = CGRectMake(10, 0, self.bounds.width - 20, self.bounds.height)
+        let htmlLabel = MDHTMLLabel(frame: frame)
       
-
-        //htmlLabel.autoresizingMask =  [.FlexibleWidth, .FlexibleHeight]
+        
         
        /* var bounds = htmlLabel.bounds
         bounds.size.height = CGFloat.max
@@ -68,16 +68,14 @@ class TextCell: ElementCell, UIWebViewDelegate, MDHTMLLabelDelegate {
         htmlLabel.numberOfLines = 0
         htmlLabel.sizeToFit()
         contentView.addSubview(htmlLabel)
-        
-        NSLayoutConstraint(item: htmlLabel, attribute: .Top, relatedBy: .Equal, toItem: htmlLabel.superview, attribute: .Top, multiplier: 1.0, constant: 5.0).active = true
-        NSLayoutConstraint(item: htmlLabel, attribute: .Bottom, relatedBy: .Equal, toItem: htmlLabel.superview, attribute: .Bottom, multiplier: 1.0, constant: 5.0).active = true
-     //   NSLayoutConstraint(item: htmlLabel, attribute: .Leading, relatedBy: .Equal, toItem: htmlLabel.superview, attribute: .Leading, multiplier: 1.0, constant: 10.0).active = true
-       // NSLayoutConstraint(item: htmlLabel, attribute: .Trailing, relatedBy: .Equal, toItem: htmlLabel.superview, attribute: .Trailing, multiplier: 1.0, constant: 10.0).active = true
+    
+        NSLayoutConstraint(item: htmlLabel, attribute: .Top, relatedBy: .Equal, toItem: htmlLabel.superview, attribute: .Top, multiplier: 1.0, constant: 15.0).active = true
+        NSLayoutConstraint(item: htmlLabel, attribute: .Bottom, relatedBy: .Equal, toItem: htmlLabel.superview, attribute: .Bottom, multiplier: 1.0, constant: 15.0).active = true
+        NSLayoutConstraint(item: htmlLabel, attribute: .Leading, relatedBy: .Equal, toItem: htmlLabel.superview, attribute: .Leading, multiplier: 1.0, constant: 15.0).active = true
+        NSLayoutConstraint(item: htmlLabel, attribute: .Trailing, relatedBy: .Equal, toItem: htmlLabel.superview, attribute: .Trailing, multiplier: 1.0, constant: 15.0).active = true
        // self.layoutIfNeeded()
        // self.layoutSubviews()
       //  self.sizeToFit()
- 
-
     }
     func webView(webView: UIWebView, shouldStartLoadWithRequest request: NSURLRequest, navigationType: UIWebViewNavigationType) -> Bool {
         webView.alpha = 0.1
