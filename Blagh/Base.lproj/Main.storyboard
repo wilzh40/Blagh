@@ -34,30 +34,31 @@
             </objects>
             <point key="canvasLocation" x="435" y="408"/>
         </scene>
-        <!--Table View Controller-->
+        <!--Post EditorVC-->
         <scene sceneID="x9b-Tk-kCj">
             <objects>
-                <tableViewController id="1Ns-M3-qOC" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="PostEditorVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="1Ns-M3-qOC" customClass="PostEditorVC" customModule="Blagh" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="YLJ-YZ-ln1">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="fws-zl-ObT">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="textCell" selectionStyle="default" indentationWidth="10" reuseIdentifier="textCell" id="JDB-Ee-LL6" customClass="TextCell" customModule="Blagh" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="fws-zl-ObT" id="NQD-uc-er0">
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="JDB-Ee-LL6" id="QaL-BU-R5Q">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7If-be-HvO" customClass="MDHTMLLabel">
+                                            <rect key="frame" x="20" y="5" width="280" height="33.5"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </view>
+                                    </subviews>
                                 </tableViewCellContentView>
-                            </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="5Tc-e2-buc">
-                                <rect key="frame" x="0.0" y="72" width="320" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="5Tc-e2-buc" id="rRg-Fg-mUr">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="htmlLabel" destination="7If-be-HvO" id="Uza-pH-ryE"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -75,8 +76,8 @@
             <objects>
                 <viewController storyboardIdentifier="TextEditorVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="9a8-6P-3dM" customClass="TextEditorVC" customModule="Blagh" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="ODA-gR-Dpl"/>
-                        <viewControllerLayoutGuide type="bottom" id="l6d-aW-2xi"/>
+                        <viewControllerLayoutGuide type="top" id="SUW-VE-gDU"/>
+                        <viewControllerLayoutGuide type="bottom" id="kX8-Ce-4BR"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="afX-g6-azP" customClass="RichEditorView" customModule="RichEditorView">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>

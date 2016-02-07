@@ -8,7 +8,11 @@
 
 import Foundation
 import UIKit
+import MDHTMLLabel
 class ElementCell : UITableViewCell {
+   // @IBOutlet var webView: UIWebView? = UIWebView()
+
+    @IBOutlet weak var webView: UIWebView!
     var BGimage : UIImageView?
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -25,11 +29,13 @@ class ElementCell : UITableViewCell {
     }
 }
 
-class TextCell: ElementCell, UIWebViewDelegate {
-    let webView: UIWebView = UIWebView()
+class TextCell: ElementCell, UIWebViewDelegate, MDHTMLLabelDelegate {
+    @IBOutlet var htmlLabel: MDHTMLLabel!
+    
+
     override func loadItem(data: String) {
         //textLabel?.text = data
-        webView.frame = self.bounds
+        /*webView.frame = self.bounds
         webView.delegate = self
         webView.scalesPageToFit = false
         webView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
@@ -43,7 +49,35 @@ class TextCell: ElementCell, UIWebViewDelegate {
         webView.opaque = false
         
         self.alpha = 0.3;
-        self.addSubview(webView)
+        self.addSubview(webView)*/
+        
+        htmlLabel = MDHTMLLabel(frame: self.bounds)
+      
+
+        //htmlLabel.autoresizingMask =  [.FlexibleWidth, .FlexibleHeight]
+        
+       /* var bounds = htmlLabel.bounds
+        bounds.size.height = CGFloat.max
+        let minimumRect = htmlLabel.textRectForBounds(bounds, limitedToNumberOfLines: 0)
+        let heightDelta = minimumRect.size.height - htmlLabel.frame.size.height
+        var frame = htmlLabel.frame
+        frame.size.height += heightDelta
+        htmlLabel.frame = frame*/
+        htmlLabel.delegate = self;
+        htmlLabel.htmlText = data;
+        htmlLabel.numberOfLines = 0
+        htmlLabel.sizeToFit()
+        contentView.addSubview(htmlLabel)
+        
+        NSLayoutConstraint(item: htmlLabel, attribute: .Top, relatedBy: .Equal, toItem: htmlLabel.superview, attribute: .Top, multiplier: 1.0, constant: 5.0).active = true
+        NSLayoutConstraint(item: htmlLabel, attribute: .Bottom, relatedBy: .Equal, toItem: htmlLabel.superview, attribute: .Bottom, multiplier: 1.0, constant: 5.0).active = true
+     //   NSLayoutConstraint(item: htmlLabel, attribute: .Leading, relatedBy: .Equal, toItem: htmlLabel.superview, attribute: .Leading, multiplier: 1.0, constant: 10.0).active = true
+       // NSLayoutConstraint(item: htmlLabel, attribute: .Trailing, relatedBy: .Equal, toItem: htmlLabel.superview, attribute: .Trailing, multiplier: 1.0, constant: 10.0).active = true
+       // self.layoutIfNeeded()
+       // self.layoutSubviews()
+      //  self.sizeToFit()
+ 
+
     }
     func webView(webView: UIWebView, shouldStartLoadWithRequest request: NSURLRequest, navigationType: UIWebViewNavigationType) -> Bool {
         webView.alpha = 0.1
@@ -73,7 +107,6 @@ class ImageCell: ElementCell {
 class VideoCell: ElementCell {
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
     }
     
     required init?(coder aDecoder: NSCoder) {

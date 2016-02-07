@@ -86,11 +86,7 @@ class CenterVC: GenericTable {
         cell.textLabel?.lineBreakMode = NSLineBreakMode.ByWordWrapping
         cell.textLabel?.numberOfLines = 2
         
-        // IF there is an artist display it
-        
-        // HACKY way when track.use has no data
-      
-        
+    
         
         //cell.imageView!.image = ConnectionManager.getImageFromURL(track.artwork_url!)
         
@@ -105,9 +101,9 @@ class CenterVC: GenericTable {
         print("You selected cell #\(indexPath.row)!")
         Singleton.sharedInstance.currentPost = tableData[indexPath.row] as? PFObject
         // Get Cell Label
-        
-
-       self.navigationController?.pushViewController(PostEditorVC(),animated: true)
+        let storyBoard = UIStoryboard(name: "Main", bundle: nil)
+        let postEditorVC = storyBoard.instantiateViewControllerWithIdentifier("PostEditorVC") as! PostEditorVC
+       self.navigationController?.pushViewController(postEditorVC,animated: true)
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

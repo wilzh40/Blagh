@@ -18,6 +18,8 @@ pod 'RichEditorView'
 pod 'XLForm'
 
 pod 'HMSegmentedControl'
+pod 'MDHTMLLabel'
+pod 'FYHTMLTextView'
 
 end
 

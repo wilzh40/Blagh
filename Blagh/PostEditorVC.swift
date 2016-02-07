@@ -33,8 +33,8 @@ class PostEditorVC : GenericTable {
 
         segmentedControl = HMSegmentedControl(sectionTitles: ["Text","Image","Video"])
         let frame = UIScreen.mainScreen().bounds
-        segmentedControl!.frame = CGRectMake(frame.minX + 10, frame.maxY - 60,
-            frame.width - 20, 60)
+        segmentedControl!.frame = CGRectMake(frame.minX, frame.maxY - 60,
+            frame.width, 60)
         self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 60, 0);
 
         view.addSubview(segmentedControl!)
@@ -43,8 +43,11 @@ class PostEditorVC : GenericTable {
         self.navigationItem.setRightBarButtonItem(barButton, animated: true)
         
         // Config height
-        tableView.estimatedRowHeight = 44.0
         tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 150.0
+
+        //tableView.setNeedsLayout()
+        //tableView.layoutIfNeeded()
         
       //  SwiftSpinner.hide()
       
@@ -55,7 +58,7 @@ class PostEditorVC : GenericTable {
         
         var element = PFObject(className: "Element")
         element["type"] = segmentedControl?.selectedSegmentIndex
-        element["text"] = "Click to edit\n Helphelpehlehelehhep im dyinnnnggggggn    diajfsidfjia test"
+        element["text"] = "Click to edit\nHelp\nHelp\nHelp\n"
         element["post"] = Singleton.sharedInstance.currentPost?.objectId
         tableData.addObject(element)
         
@@ -106,14 +109,14 @@ class PostEditorVC : GenericTable {
         return tableData.count
     }
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell: ElementCell = ElementCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "protoCell")
+        let cell = ElementCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "elementCell")
+        
         let element = tableData[indexPath.row]
         switch element["type"] as! Int {
             case 0:
-                cell = TextCell()
-                
-                
-            
+                let cell = TextCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "textCell") as TextCell
+                cell.loadItem(element["text"] as! String)
+                return cell
             break
         default:
             break
@@ -121,8 +124,8 @@ class PostEditorVC : GenericTable {
             
             
         }
-        cell.loadItem(element["text"] as! String)
         return cell
+        
     }
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let element = tableData[indexPath.row]
@@ -133,14 +136,22 @@ class PostEditorVC : GenericTable {
             textEditorVC.element = element as? PFObject
             self.navigationController?.pushViewController(textEditorVC, animated: true)
             
-            
-            
             break
         default:
             break
         }
 
     }
+    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return true
+    }
+
+    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
+        let itemToMove = tableData[fromIndexPath.row]
+        tableData.removeObjectAtIndex(fromIndexPath.row)
+        tableData.insertObject(itemToMove, atIndex: toIndexPath.row)
+    }
+
     
   
 }
