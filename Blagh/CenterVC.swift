@@ -31,7 +31,6 @@ class CenterVC: GenericTable {
     }
     
    
-    
     func addPost() {
 
         var post = PFObject(className: "Post")
@@ -39,6 +38,7 @@ class CenterVC: GenericTable {
         post["title"] = "Untitled"
         post["published"] = false
         post["elements"] = []
+        post["elementCount"] = 0
         newPostAnimated = false
         
         //Save data
@@ -52,11 +52,6 @@ class CenterVC: GenericTable {
                 // There was a problem, check error.description
             }
         }
-
-     //        for p in tableData {
-//            let indexPaths = NSMutableArray()
-//            indexPaths.addObject(
-//        }
         self.tableView.reloadData()
     }
     
@@ -117,4 +112,20 @@ class CenterVC: GenericTable {
     func newPost() {
         
     }
+    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return true
+    }
+    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if editingStyle == .Delete {
+            let post = tableData[indexPath.row] as? PFObject
+            post!.deleteInBackground()
+            tableData.removeObjectAtIndex(indexPath.row)
+            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+           // tableView.reloadData()
+            
+            
+        }
+        
+    }
+
 }

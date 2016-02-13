@@ -59,6 +59,7 @@ class Singleton {
         var query = PFQuery(className:"Element")
        // query.includeKey("type")
         query.whereKey("post", equalTo:(currentPost?.objectId)!)
+        query.addAscendingOrder("order")
         query.findObjectsInBackgroundWithBlock {
             (objects: [PFObject]?, error: NSError?) -> Void in
             

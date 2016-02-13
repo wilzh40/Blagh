@@ -73,17 +73,14 @@ class PostEditorVC : GenericTable {
         element["type"] = segmentedControl?.selectedSegmentIndex
         element["text"] = "Click to edit\nHelp\nHelp\nHelp\n"
         element["post"] = Singleton.sharedInstance.currentPost?.objectId
+        element["order"] = Singleton.sharedInstance.currentPost?["elementCount"]
 
         tableData.addObject(element)
         
         if let currentPost = Singleton.sharedInstance.currentPost {
+            currentPost.incrementKey("elementCount")
             currentPost.addUniqueObjectsFromArray(tableData as [AnyObject], forKey: "elements")
             currentPost.saveInBackground()
-//            if var postElements : [PFObject] = currentPost["elements"] as? [PFObject]  {
-//                postElements.append(element)
-//                currentPost.saveInBackground()
-//               
-//            }
         }
         //Save data
         element.saveInBackgroundWithBlock {
@@ -173,7 +170,6 @@ class PostEditorVC : GenericTable {
             tableData.removeObjectAtIndex(indexPath.row)
             if let currentPost = Singleton.sharedInstance.currentPost {
                 currentPost.removeObject(element, forKey: "elements")
-        
                 currentPost.saveInBackground()
             }
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)

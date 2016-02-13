@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import Parse
 class GenericTable : UITableViewController, DataDelegate  {
     var tableData: NSMutableArray = []
     var newPostAnimated: Bool = false
@@ -74,6 +75,14 @@ class GenericTable : UITableViewController, DataDelegate  {
                 swap(&tableDataArr[indexPath.row], &tableDataArr[Drag.sourceIndexPath.row])
                 tableData = NSMutableArray(array: tableDataArr)
                 tableView.moveRowAtIndexPath(Drag.sourceIndexPath, toIndexPath: indexPath)
+                
+                // Danger! Must modify if not using elements
+                let e1 = tableData[indexPath.row] as! PFObject
+                let e2 = tableData[Drag.sourceIndexPath.row] as! PFObject
+                swap(&e1["order"], &e2["order"])
+                e1.saveInBackground()
+                e2.saveInBackground()
+                
                 Drag.sourceIndexPath = indexPath
                 saveData()
             }
