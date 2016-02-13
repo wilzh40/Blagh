@@ -13,7 +13,6 @@ import HMSegmentedControl
 
 class PostEditorVC : GenericTable {
     var segmentedControl : HMSegmentedControl?
-    var elements: [PFObject] = []
     
     enum elementType: Int {
         case text
@@ -64,6 +63,9 @@ class PostEditorVC : GenericTable {
         }
         
     }
+    override func viewWillDisappear(animated: Bool) {
+        saveData()
+    }
    
     func addElement() {
         
@@ -71,13 +73,17 @@ class PostEditorVC : GenericTable {
         element["type"] = segmentedControl?.selectedSegmentIndex
         element["text"] = "Click to edit\nHelp\nHelp\nHelp\n"
         element["post"] = Singleton.sharedInstance.currentPost?.objectId
+
         tableData.addObject(element)
         
         if let currentPost = Singleton.sharedInstance.currentPost {
-            if var postElements : [PFObject] = currentPost["elements"] as? [PFObject]  {
-                postElements.append(element)
-               
-            }
+            currentPost.addUniqueObjectsFromArray(tableData as [AnyObject], forKey: "elements")
+            currentPost.saveInBackground()
+//            if var postElements : [PFObject] = currentPost["elements"] as? [PFObject]  {
+//                postElements.append(element)
+//                currentPost.saveInBackground()
+//               
+//            }
         }
         //Save data
         element.saveInBackgroundWithBlock {
@@ -99,11 +105,6 @@ class PostEditorVC : GenericTable {
         
     }
 
-//    override func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-//        return segmentedControl
-//        
-//
-//    }
     override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         tableView.bringSubviewToFront(segmentedControl!)
     }
@@ -130,7 +131,6 @@ class PostEditorVC : GenericTable {
             break
         default:
             break
-            
             
             
         }
@@ -168,16 +168,17 @@ class PostEditorVC : GenericTable {
     
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
+            let element = tableData[indexPath.row] as! PFObject
+            element.deleteInBackground()
             tableData.removeObjectAtIndex(indexPath.row)
             if let currentPost = Singleton.sharedInstance.currentPost {
-                if var postElements : [PFObject] = currentPost["elements"] as? [PFObject]  {
-                    postElements.removeAtIndex(indexPath.row)
-                    currentPost["elements"] = postElements
-                    currentPost.saveInBackground()
-                }
+                currentPost.removeObject(element, forKey: "elements")
+        
+                currentPost.saveInBackground()
             }
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-            
+            tableView.reloadData()
+
             
         }
         

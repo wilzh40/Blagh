@@ -287,6 +287,7 @@
 				TargetAttributes = {
 					77E2AE041C50A88E006EE318 = {
 						CreatedOnToolsVersion = 7.2;
+						DevelopmentTeam = V688V75KS8;
 					};
 					77E2AE181C50A88F006EE318 = {
 						CreatedOnToolsVersion = 7.2;
@@ -553,10 +554,13 @@
 			baseConfigurationReference = 61EACAFA28E3083EA7388738 /* Pods-Blagh.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Blagh/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.WZ.Blagh;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -565,10 +569,13 @@
 			baseConfigurationReference = CBB0234AD8330FE87782D313 /* Pods-Blagh.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Blagh/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.WZ.Blagh;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

@@ -26,6 +26,10 @@ class GenericTable : UITableViewController, DataDelegate  {
 
       
     }
+    
+    func orderDidChange() {
+        
+    }
     func handleLongPress(gesture: UILongPressGestureRecognizer) {
         let point = gesture.locationInView(tableView)
         let indexPath = tableView.indexPathForRowAtPoint(point)
@@ -71,6 +75,7 @@ class GenericTable : UITableViewController, DataDelegate  {
                 tableData = NSMutableArray(array: tableDataArr)
                 tableView.moveRowAtIndexPath(Drag.sourceIndexPath, toIndexPath: indexPath)
                 Drag.sourceIndexPath = indexPath
+                saveData()
             }
         default:
             if let cell = tableView.cellForRowAtIndexPath(Drag.sourceIndexPath) {

@@ -9,7 +9,6 @@
 import UIKit
 import Parse
 import CCInfiniteScrolling
-import ZSSRichTextEditor
 import RichEditorView
 
 class TextEditorVC: UIViewController, RichEditorDelegate, RichEditorToolbarDelegate {

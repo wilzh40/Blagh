@@ -31,15 +31,12 @@ class ElementCell : UITableViewCell {
 
 class TextCell: ElementCell, UIWebViewDelegate, MDHTMLLabelDelegate {
     //@IBOutlet var htmlLabel: MDHTMLLabel!
-
-    
-
     override func loadItem(data: String) {
         //textLabel?.text = data
         /*webView.frame = self.bounds
         webView.delegate = self
         webView.scalesPageToFit = false
-        webView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+        webView.autoresizingMask = [.FlexibleWidth, .fƒFlexibleHeight]
         webView.dataDetectorTypes = .None
         webView.backgroundColor = UIColor.clearColor()
         webView.scrollView.scrollEnabled = false
@@ -77,6 +74,7 @@ class TextCell: ElementCell, UIWebViewDelegate, MDHTMLLabelDelegate {
        // self.layoutSubviews()
       //  self.sizeToFit()
     }
+    
     func webView(webView: UIWebView, shouldStartLoadWithRequest request: NSURLRequest, navigationType: UIWebViewNavigationType) -> Bool {
         webView.alpha = 0.1
         return true
