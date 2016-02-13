@@ -50,8 +50,6 @@ class TextCell: ElementCell, UIWebViewDelegate, MDHTMLLabelDelegate {
         self.addSubview(webView)*/
         let frame = CGRectMake(10, 0, self.bounds.width - 20, self.bounds.height)
         let htmlLabel = MDHTMLLabel(frame: frame)
-      
-        
         
        /* var bounds = htmlLabel.bounds
         bounds.size.height = CGFloat.max
@@ -65,11 +63,15 @@ class TextCell: ElementCell, UIWebViewDelegate, MDHTMLLabelDelegate {
         htmlLabel.numberOfLines = 0
         htmlLabel.sizeToFit()
         contentView.addSubview(htmlLabel)
-    
+    /*
         NSLayoutConstraint(item: htmlLabel, attribute: .Top, relatedBy: .Equal, toItem: htmlLabel.superview, attribute: .Top, multiplier: 1.0, constant: 15.0).active = true
         NSLayoutConstraint(item: htmlLabel, attribute: .Bottom, relatedBy: .Equal, toItem: htmlLabel.superview, attribute: .Bottom, multiplier: 1.0, constant: 15.0).active = true
         NSLayoutConstraint(item: htmlLabel, attribute: .Leading, relatedBy: .Equal, toItem: htmlLabel.superview, attribute: .Leading, multiplier: 1.0, constant: 15.0).active = true
-        NSLayoutConstraint(item: htmlLabel, attribute: .Trailing, relatedBy: .Equal, toItem: htmlLabel.superview, attribute: .Trailing, multiplier: 1.0, constant: 15.0).active = true
+        NSLayoutConstraint(item: htmlLabel, attribute: .Trailing, relatedBy: .Equal, toItem: htmlLabel.superview, attribute: .Trailing, multiplier: 1.0, constant: 15.0).active = true*/
+        htmlLabel.leadingAnchor.constraintEqualToAnchor(contentView.trailingAnchor, constant: 8.0).active = true
+        htmlLabel.trailingAnchor.constraintEqualToAnchor(contentView.trailingAnchor).active = true
+        htmlLabel.topAnchor.constraintEqualToAnchor(contentView.topAnchor).active = true
+        htmlLabel.bottomAnchor.constraintEqualToAnchor(contentView.bottomAnchor).active = true
        // self.layoutIfNeeded()
        // self.layoutSubviews()
       //  self.sizeToFit()
