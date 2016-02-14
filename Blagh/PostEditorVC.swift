@@ -13,7 +13,7 @@ import HMSegmentedControl
 
 class PostEditorVC : GenericTable, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     var segmentedControl : HMSegmentedControl?
-
+    
     
     enum elementType: Int {
         case text
@@ -31,13 +31,13 @@ class PostEditorVC : GenericTable, UIImagePickerControllerDelegate, UINavigation
         }
         
         SwiftSpinner.show("Loading Post")
-
+        
         segmentedControl = HMSegmentedControl(sectionTitles: ["Text","Image","Video"])
         let frame = UIScreen.mainScreen().bounds
         segmentedControl!.frame = CGRectMake(frame.minX, frame.maxY - 60,
             frame.width, 60)
         self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 60, 0);
-
+        
         view.addSubview(segmentedControl!)
         
         let barButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: Selector("addElement"))
@@ -46,12 +46,14 @@ class PostEditorVC : GenericTable, UIImagePickerControllerDelegate, UINavigation
         // Config height
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 150.0
+        tableView.separatorStyle = .None
+
         //tableView.setNeedsLayout()
         //tableView.layoutIfNeeded()
         
-      //  SwiftSpinner.hide()
-      
-
+        //  SwiftSpinner.hide()
+        
+        
     }
     override func saveData() {
         if let currentPost = Singleton.sharedInstance.currentPost {
@@ -65,15 +67,43 @@ class PostEditorVC : GenericTable, UIImagePickerControllerDelegate, UINavigation
     override func viewWillDisappear(animated: Bool) {
         saveData()
     }
-   
+    
     func addElement() {
-        
         var element = PFObject(className: "Element")
-        element["type"] = segmentedControl?.selectedSegmentIndex
-        element["text"] = "Click to edit\nHelp\nHelp\nHelp\n"
-        element["post"] = Singleton.sharedInstance.currentPost?.objectId
         element["order"] = Singleton.sharedInstance.currentPost?["elementCount"]
-
+        element["type"] = segmentedControl?.selectedSegmentIndex
+        element["post"] = Singleton.sharedInstance.currentPost?.objectId
+        
+        switch (segmentedControl?.selectedSegmentIndex)! {
+        case 0:
+            element["text"] = "Click to edit"
+            break
+        case 1:
+            let url = NSURL(string: "https://upload.wikimedia.org/wikipedia/en/1/10/Apophysis-100303-104.jpg")
+            let data = NSData(contentsOfURL: url!) //make sure your image in this url does exist, otherwise unwrap in a if let check
+            let image = UIImage(data: data!)
+            let imageData = UIImagePNGRepresentation(image!)
+            let imageFile = PFFile(name:"image.png", data:imageData!)! as PFFile
+            element["image"] = imageFile
+            /*UIImage.contentsOfURL(NSURL(string: "http://www.cosmicmind.io/CM/iTunesArtwork.png")!) { (image: UIImage?, error: NSError?) in
+                if let v: UIImage = image {
+                    let imageData = UIImagePNGRepresentation(image!)
+                    let imageFile = PFFile(name:"image.png", data:imageData!)! as PFFile
+                    element["image"] = imageFile
+                } else {
+                    let imageData = UIImagePNGRepresentation(UIImage(contentsOfFile: "MaterialBackground")!)
+                    let imageFile = PFFile(name:"image.png", data:imageData!)! as PFFile
+                    element["image"] = imageFile
+                }
+            }*/
+            
+            
+            break
+        case 2: break
+        default: break
+            
+        }
+        
         tableData.addObject(element)
         
         if let currentPost = Singleton.sharedInstance.currentPost {
@@ -93,20 +123,20 @@ class PostEditorVC : GenericTable, UIImagePickerControllerDelegate, UINavigation
         
         self.tableView.reloadData()
     }
-
-  
+    
+    
     override func viewDidAppear(animated: Bool) {
         
         tableView.reloadData()
         
     }
-
+    
     override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         tableView.bringSubviewToFront(segmentedControl!)
     }
     override func scrollViewDidScroll(scrollView: UIScrollView) {
         segmentedControl!.transform = CGAffineTransformMakeTranslation(0, scrollView.contentOffset.y);
-
+        
     }
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int  {
         return 1
@@ -120,17 +150,30 @@ class PostEditorVC : GenericTable, UIImagePickerControllerDelegate, UINavigation
         
         let element = tableData[indexPath.row]
         switch element["type"] as! Int {
-            case 0:
-                let cell = TextCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "textCell") as TextCell
-                cell.loadItem(element["text"] as! String)
-                return cell
-            break
-        case 1:
+        case 0:
             let cell = TextCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "textCell") as TextCell
             cell.loadItem(element["text"] as! String)
             return cell
             break
+        case 1:
+            
+            
+            let cell = ImageCell(style: UITableViewCellStyle.Default, reuseIdentifier: "textCell") as ImageCell
+            if let imageData = element.valueForKey("image")! as? PFFile {
+                imageData.getDataInBackgroundWithBlock({
+                    (imageData: NSData?, error: NSError?) -> Void in
+                    if (error == nil && imageData != nil) {
+                        let image = UIImage(data:imageData!)
+                        cell.loadImage(image!)
+                        
+                    }
+                })
+            }
 
+            //cell.loadItem(element["text"] as! String)
+            return cell
+            break
+            
         default:
             break
             
@@ -150,23 +193,23 @@ class PostEditorVC : GenericTable, UIImagePickerControllerDelegate, UINavigation
             
             break
         case 1:
-  
+            
             break
         default:
             break
         }
-
+        
     }
     override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         return true
     }
-
+    
     override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
         let itemToMove = tableData[fromIndexPath.row]
         tableData.removeObjectAtIndex(fromIndexPath.row)
         tableData.insertObject(itemToMove, atIndex: toIndexPath.row)
     }
-
+    
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         return true
     }
@@ -182,11 +225,11 @@ class PostEditorVC : GenericTable, UIImagePickerControllerDelegate, UINavigation
             }
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
             tableView.reloadData()
-
+            
             
         }
         
     }
     
-  
+    
 }

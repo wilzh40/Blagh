@@ -91,14 +91,23 @@ class TextCell: ElementCell, UIWebViewDelegate, MDHTMLLabelDelegate {
 }
 
 class ImageCell: ElementCell {
-    override func loadItem(data: String) {
+    func loadImage(data: UIImage) {
+        /*
         ImageLoader.sharedLoader.imageForUrl(data, completionHandler:{(image: UIImage?, url: String) in
             self.BGimage?.image = image
             self.BGimage?.alpha = 1
             UIView.animateWithDuration(0.3, animations:{
                 
             })
-        })
+        })*/
+        let imgView : UIImageView = UIImageView()
+        //i mgView.frame = self.contentView.bounds
+        imgView.image = data
+        imgView.leadingAnchor.constraintEqualToAnchor(contentView.trailingAnchor, constant: 8.0).active = true
+        imgView.trailingAnchor.constraintEqualToAnchor(contentView.trailingAnchor).active = true
+        imgView.topAnchor.constraintEqualToAnchor(contentView.topAnchor).active = true
+        imgView.bottomAnchor.constraintEqualToAnchor(contentView.bottomAnchor).active = true
+        self.contentView.addSubview(imgView)
     }
 }
 
