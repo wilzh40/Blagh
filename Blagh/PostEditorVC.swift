@@ -48,8 +48,7 @@ class PostEditorVC : GenericTable, UIImagePickerControllerDelegate, UINavigation
         tableView.estimatedRowHeight = 150.0
         tableView.separatorStyle = .None
 
-        //tableView.setNeedsLayout()
-        //tableView.layoutIfNeeded()
+     
         
         //  SwiftSpinner.hide()
         
@@ -81,7 +80,7 @@ class PostEditorVC : GenericTable, UIImagePickerControllerDelegate, UINavigation
         case 1:
             let url = NSURL(string: "https://upload.wikimedia.org/wikipedia/en/1/10/Apophysis-100303-104.jpg")
             let data = NSData(contentsOfURL: url!) //make sure your image in this url does exist, otherwise unwrap in a if let check
-            let image = UIImage(data: data!)
+            let image = UIImage(data: data!)?.resize(toWidth: 200)
             let imageData = UIImagePNGRepresentation(image!)
             let imageFile = PFFile(name:"image.png", data:imageData!)! as PFFile
             element["image"] = imageFile
@@ -158,7 +157,7 @@ class PostEditorVC : GenericTable, UIImagePickerControllerDelegate, UINavigation
         case 1:
             
             
-            let cell = ImageCell(style: UITableViewCellStyle.Default, reuseIdentifier: "textCell") as ImageCell
+            let cell = ImageCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "imageCell") as ImageCell
             if let imageData = element.valueForKey("image")! as? PFFile {
                 imageData.getDataInBackgroundWithBlock({
                     (imageData: NSData?, error: NSError?) -> Void in

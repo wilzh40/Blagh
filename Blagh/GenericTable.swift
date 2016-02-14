@@ -84,7 +84,7 @@ class GenericTable : UITableViewController, DataDelegate  {
                 e2.saveInBackground()
                 
                 Drag.sourceIndexPath = indexPath
-                saveData()
+                //saveData()
             }
         default:
             if let cell = tableView.cellForRowAtIndexPath(Drag.sourceIndexPath) {
@@ -140,6 +140,9 @@ class GenericTable : UITableViewController, DataDelegate  {
         self.tableData = data
         SwiftSpinner.hide()
         self.tableView.reloadData()
+        tableView.setNeedsLayout()
+        tableView.layoutIfNeeded()
+        
         
     }
     func saveData() {

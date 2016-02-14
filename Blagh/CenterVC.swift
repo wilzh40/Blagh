@@ -81,8 +81,6 @@ class CenterVC: GenericTable {
         cell.textLabel?.lineBreakMode = NSLineBreakMode.ByWordWrapping
         cell.textLabel?.numberOfLines = 2
         
-    
-        
         //cell.imageView!.image = ConnectionManager.getImageFromURL(track.artwork_url!)
         
         // Opti efforts
@@ -118,9 +116,10 @@ class CenterVC: GenericTable {
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
             let post = tableData[indexPath.row] as? PFObject
-            post!.deleteInBackground()
             tableData.removeObjectAtIndex(indexPath.row)
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+            post!.deleteInBackground()
+
            // tableView.reloadData()
             
             

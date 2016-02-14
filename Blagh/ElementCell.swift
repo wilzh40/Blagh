@@ -101,13 +101,14 @@ class ImageCell: ElementCell {
             })
         })*/
         let imgView : UIImageView = UIImageView()
-        //i mgView.frame = self.contentView.bounds
-        imgView.image = data
+        imgView.frame = CGRectMake(10, 0, (self.window?.frame.width)! - 20, 200)
+        imgView.image = data//.resize(toWidth:200)
+        self.contentView.addSubview(imgView)
+
         imgView.leadingAnchor.constraintEqualToAnchor(contentView.trailingAnchor, constant: 8.0).active = true
         imgView.trailingAnchor.constraintEqualToAnchor(contentView.trailingAnchor).active = true
         imgView.topAnchor.constraintEqualToAnchor(contentView.topAnchor).active = true
         imgView.bottomAnchor.constraintEqualToAnchor(contentView.bottomAnchor).active = true
-        self.contentView.addSubview(imgView)
     }
 }
 
