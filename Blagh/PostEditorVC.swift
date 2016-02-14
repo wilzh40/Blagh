@@ -11,8 +11,9 @@ import UIKit
 import Parse
 import HMSegmentedControl
 
-class PostEditorVC : GenericTable {
+class PostEditorVC : GenericTable, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     var segmentedControl : HMSegmentedControl?
+
     
     enum elementType: Int {
         case text
@@ -45,8 +46,6 @@ class PostEditorVC : GenericTable {
         // Config height
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 150.0
-
-        
         //tableView.setNeedsLayout()
         //tableView.layoutIfNeeded()
         
@@ -126,6 +125,12 @@ class PostEditorVC : GenericTable {
                 cell.loadItem(element["text"] as! String)
                 return cell
             break
+        case 1:
+            let cell = TextCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "textCell") as TextCell
+            cell.loadItem(element["text"] as! String)
+            return cell
+            break
+
         default:
             break
             
@@ -143,6 +148,9 @@ class PostEditorVC : GenericTable {
             textEditorVC.element = element as? PFObject
             self.navigationController?.pushViewController(textEditorVC, animated: true)
             
+            break
+        case 1:
+  
             break
         default:
             break

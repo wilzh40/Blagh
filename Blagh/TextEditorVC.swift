@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Material
 import Parse
 import CCInfiniteScrolling
 import RichEditorView
