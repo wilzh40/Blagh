@@ -140,8 +140,16 @@ class GenericTable : UITableViewController, DataDelegate  {
         self.tableData = data
         SwiftSpinner.hide()
         self.tableView.reloadData()
-        tableView.setNeedsLayout()
-        tableView.layoutIfNeeded()
+        //tableView.layoutSubviews()
+        if tableData.count >= 2 {
+            // hacky way to reformat
+            tableView.moveRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0), toIndexPath: NSIndexPath(forRow: 1, inSection: 0))
+            tableView.moveRowAtIndexPath(NSIndexPath(forRow: 1, inSection: 0), toIndexPath:  NSIndexPath(forRow: 0, inSection: 0))
+
+
+
+        }
+        
         
         
     }
@@ -150,7 +158,7 @@ class GenericTable : UITableViewController, DataDelegate  {
     }
     
     override func viewWillAppear(animated: Bool) {
-        self.tableView.reloadData()
+       //self.tableView.reloadData()
     }
     
     //Draggable

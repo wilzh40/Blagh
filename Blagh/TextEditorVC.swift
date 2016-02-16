@@ -61,7 +61,7 @@ class TextEditorVC: UIViewController, RichEditorDelegate, RichEditorToolbarDeleg
     }
     func done (){
         element["text"] = editorView.contentHTML
-        element.pinInBackground()
+        element.saveInBackground()
         self.navigationController?.popViewControllerAnimated(true)
     }
     

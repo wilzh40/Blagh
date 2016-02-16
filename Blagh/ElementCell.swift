@@ -63,6 +63,7 @@ class TextCell: ElementCell, UIWebViewDelegate, MDHTMLLabelDelegate {
         htmlLabel.numberOfLines = 0
         htmlLabel.sizeToFit()
         contentView.addSubview(htmlLabel)
+        
     /*
         NSLayoutConstraint(item: htmlLabel, attribute: .Top, relatedBy: .Equal, toItem: htmlLabel.superview, attribute: .Top, multiplier: 1.0, constant: 15.0).active = true
         NSLayoutConstraint(item: htmlLabel, attribute: .Bottom, relatedBy: .Equal, toItem: htmlLabel.superview, attribute: .Bottom, multiplier: 1.0, constant: 15.0).active = true
@@ -91,6 +92,8 @@ class TextCell: ElementCell, UIWebViewDelegate, MDHTMLLabelDelegate {
 }
 
 class ImageCell: ElementCell {
+    let imgView : UIImageView = UIImageView()
+
     func loadImage(data: UIImage) {
         /*
         ImageLoader.sharedLoader.imageForUrl(data, completionHandler:{(image: UIImage?, url: String) in
@@ -100,9 +103,12 @@ class ImageCell: ElementCell {
                 
             })
         })*/
-        let imgView : UIImageView = UIImageView()
         imgView.frame = CGRectMake(10, 0, (self.window?.frame.width)! - 20, 200)
         imgView.image = data//.resize(toWidth:200)
+        imgView.contentMode = .Center;
+        if (imgView.bounds.size.width > data.size.width && imgView.bounds.size.height > data.size.height) {
+            imgView.contentMode = UIViewContentMode.ScaleAspectFit;
+        }
         self.contentView.addSubview(imgView)
 
         imgView.leadingAnchor.constraintEqualToAnchor(contentView.trailingAnchor, constant: 8.0).active = true

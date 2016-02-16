@@ -13,26 +13,43 @@ import Parse
 
 class ImageEditorVC : UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     let imagePicker = UIImagePickerController()
-    let imageView = UIImageView()
+    let imgView = UIImageView()
+    var element: PFObject!
+
     override func viewDidLoad() {
         view.backgroundColor = MaterialColor.white
         
         imagePicker.delegate = self
     
-        imageView.frame = view.bounds
+        imgView.frame = view.bounds
+        imgView.contentMode = .Center;
+        if (imgView.bounds.size.width > imgView.image!.size.width && imgView.bounds.size.height > imgView.image!.size.height) {
+            imgView.contentMode = UIViewContentMode.ScaleAspectFit;
+        }
+        view.addSubview(imgView)
         
         prepareCameraButton()
         preparePhotoLibraryButton()
         
+        let barButton = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: Selector("done"))
+        self.navigationItem.setRightBarButtonItem(barButton, animated: true)
     }
-    
-    func handlePhotoLibraryButton(sender: UIButton) {
+    func done() {
+        let image = imgView.image
+        let imageData = UIImagePNGRepresentation(image!)
+        let imageFile = PFFile(name:"image.png", data:imageData!)! as PFFile
+        element["image"] = imageFile
+        element.saveInBackground()
+        self.navigationController?.popViewControllerAnimated(true)
+    }
+    func handlePhotoLibraryButton() {
         imagePicker.allowsEditing = false
         imagePicker.sourceType = .PhotoLibrary
         presentViewController(imagePicker, animated: true, completion: nil)
+
     }
     
-    func handleCameraButton(sender: UIButton) {
+    func handleCameraButton() {
         
     }
     
@@ -61,15 +78,15 @@ class ImageEditorVC : UIViewController, UINavigationControllerDelegate, UIImageP
         
         view.addSubview(button)
         button.translatesAutoresizingMaskIntoConstraints = false
-        MaterialLayout.alignFromBottomRight(view, child: button, bottom: 88, right: 88)
+        MaterialLayout.alignFromBottomRight(view, child: button, bottom: 88, right: 16)
         MaterialLayout.size(view, child: button, width: 56, height: 56)
         button.addTarget(self, action: "handlePhotoLibraryButton", forControlEvents: .TouchUpInside)
         
     }
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
-            imageView.contentMode = .ScaleAspectFit
-            imageView.image = pickedImage
+            imgView.contentMode = .ScaleAspectFit
+            imgView.image = pickedImage
         }
         
         dismissViewControllerAnimated(true, completion: nil)

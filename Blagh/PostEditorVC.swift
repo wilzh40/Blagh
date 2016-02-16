@@ -63,6 +63,7 @@ class PostEditorVC : GenericTable, UIImagePickerControllerDelegate, UINavigation
         }
         
     }
+  
     override func viewWillDisappear(animated: Bool) {
         saveData()
     }
@@ -192,7 +193,11 @@ class PostEditorVC : GenericTable, UIImagePickerControllerDelegate, UINavigation
             
             break
         case 1:
-            
+            let cell = tableView.cellForRowAtIndexPath(indexPath) as! ImageCell
+            let imageEditorVC = ImageEditorVC()
+            imageEditorVC.element = element as? PFObject
+            imageEditorVC.imgView.image = cell.imgView.image
+             self.navigationController?.pushViewController(imageEditorVC, animated: true)
             break
         default:
             break
