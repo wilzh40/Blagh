@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 import MDHTMLLabel
 import AVFoundation
+import AVKit
 
 class ElementCell : UITableViewCell {
    // @IBOutlet var webView: UIWebView? = UIWebView()
@@ -148,9 +149,29 @@ class VideoCell: ElementCell {
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
     }
-    
+    override func sizeThatFits(size: CGSize) -> CGSize {
+       return CGSize(width: 200,height: 250)
+    }
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    override func loadItem(data: String) {
+        let videoPlayer = AVPlayer(URL: NSURL(string: data)!)
+        let playerController = AVPlayerViewController()
+        
+        playerController.player = player
+        self.addChildViewController(playerController)
+        self.view.addSubview(playerController.view)
+        playerController.view.frame = self.view.frame
+
+
+        //self.contentView.addSubview(videoPlayer)
+        /*videoPlayer.leadingAnchor.constraintEqualToAnchor(contentView.trailingAnchor, constant: 8.0).active = true
+        videoPlayer.trailingAnchor.constraintEqualToAnchor(contentView.trailingAnchor).active = true
+        videoPlayer.topAnchor.constraintEqualToAnchor(contentView.topAnchor).active = true
+        videoPlayer.bottomAnchor.constraintEqualToAnchor(contentView.bottomAnchor).active = true*/
+
+        
     }
 
 }

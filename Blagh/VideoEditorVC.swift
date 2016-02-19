@@ -82,7 +82,7 @@ class VideoEditorVC : UIViewController, UINavigationControllerDelegate, UIImageP
         }*/
         print(info)
         
-        videoURL = (info[UIImagePickerControllerMediaURL] as! NSURL).path! as String
+        videoURL = (info[UIImagePickerControllerMediaURL] as! NSURL).absoluteString as String
         self.dismissViewControllerAnimated(true, completion:nil)
         //Here you can manipulate the adquired video
     }
