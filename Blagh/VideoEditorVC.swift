@@ -52,20 +52,44 @@ class VideoEditorVC : UIViewController, UINavigationControllerDelegate, UIImageP
         self.addChildViewController(self.player)
         self.view.addSubview(self.player.view)
         self.player.didMoveToParentViewController(self)
+        self.player.playbackLoops = true
         if !firstImage {
             self.player.setUrl(NSURL(string:videoURL!)!)
             self.player.playFromBeginning()
             self.player.fillMode = "AVLayerVideoGravityResizeAspect"
-
+            
         }
+        
         prepareCameraButton()
         preparePhotoLibraryButton()
         
         let barButton = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: Selector("done"))
         self.navigationItem.setRightBarButtonItem(barButton, animated: true)
-    }
+            self.player.playbackLoops = true
+            
+            let tapGestureRecognizer: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "handleTapGestureRecognizer:")
+            tapGestureRecognizer.numberOfTapsRequired = 1
+            self.player.view.addGestureRecognizer(tapGestureRecognizer)
+        }
+        
     
-    
+        // MARK: UIGestureRecognizer
+        
+        func handleTapGestureRecognizer(gestureRecognizer: UITapGestureRecognizer) {
+            switch (self.player.playbackState.rawValue) {
+            case PlaybackState.Stopped.rawValue:
+                self.player.playFromBeginning()
+            case PlaybackState.Paused.rawValue:
+                self.player.playFromCurrentTime()
+            case PlaybackState.Playing.rawValue:
+                self.player.pause()
+            case PlaybackState.Failed.rawValue:
+                self.player.pause()
+            default:
+                self.player.pause()
+            }
+        }
+
     
     func done() {
        /* let image = imgView.image?.resize(toWidth: 200) //Hacky way to ensure file size
@@ -77,6 +101,20 @@ class VideoEditorVC : UIViewController, UINavigationControllerDelegate, UIImageP
         self.navigationController?.popViewControllerAnimated(true)
         
         
+    }
+    override func viewWillAppear(animated: Bool) {
+        self.player.setUrl(NSURL(string:videoURL!)!)
+        player.playFromBeginning()
+    }
+    
+    override func viewWillDisappear(animated : Bool) {
+        super.viewWillDisappear(animated)
+        
+        if (self.isMovingFromParentViewController()){
+            if (element["video"] == nil) {
+                element.deleteInBackground()
+            }
+        }
     }
     
 
@@ -99,36 +137,20 @@ class VideoEditorVC : UIViewController, UINavigationControllerDelegate, UIImageP
         print(info)
         
         videoURL = (info[UIImagePickerControllerMediaURL] as! NSURL).path!/*!.stringByReplacingOccurrencesOfString("trim.", withString: "", options: [], range: nil )*/ as String
-        if (UIVideoAtPathIsCompatibleWithSavedPhotosAlbum (videoURL!)) {
+       /* if (UIVideoAtPathIsCompatibleWithSavedPhotosAlbum (videoURL!)) {
             UISaveVideoAtPathToSavedPhotosAlbum (videoURL!, nil, nil, nil);
-        }
+        }*/
+        player.setUrl(info[UIImagePickerControllerMediaURL] as! NSURL)
+        player.playFromBeginning()
 
         self.dismissViewControllerAnimated(true, completion:nil)
         //Here you can manipulate the adquired video
     }
     
-    func startMediaBrowserFromViewController(viewController: UIViewController, usingDelegate delegate: protocol<UINavigationControllerDelegate, UIImagePickerControllerDelegate>) -> Bool {
-        // 1
-        if UIImagePickerController.isSourceTypeAvailable(.SavedPhotosAlbum) == false {
-            return false
-        }
-        
-        // 2
-        let mediaUI = UIImagePickerController()
-        mediaUI.sourceType = .SavedPhotosAlbum
-        mediaUI.mediaTypes = [kUTTypeMovie as NSString as String]
-        mediaUI.allowsEditing = true
-        mediaUI.delegate = delegate
-        
-        // 3
-        presentViewController(mediaUI, animated: true, completion: nil)
-        return true
-    }
-    
-    func handleCameraButton() {
+      func handleCameraButton() {
         var captureVC = CaptureVC()
         captureVC.delegate = self
-        captureVC.captureView.captureMode = .Photo
+        
         
         //captureVC.captureView
         presentViewController(captureVC, animated: true, completion: nil)
@@ -172,9 +194,8 @@ class VideoEditorVC : UIViewController, UINavigationControllerDelegate, UIImageP
     }
     
     func captureViewDidEnd(image: UIImage?, videoURL: NSURL?) {
-        if let img = image {
-            imgView.contentMode = .ScaleAspectFit
-            imgView.image = img
+        if let url = videoURL {
+            self.videoURL = url.path!
         }
     }
     
