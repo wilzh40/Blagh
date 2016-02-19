@@ -63,8 +63,10 @@ class TextCell: ElementCell, UIWebViewDelegate, MDHTMLLabelDelegate {
         htmlLabel.delegate = self;
         htmlLabel.htmlText = data;
         htmlLabel.numberOfLines = 0
+        htmlLabel.font = UIFont(name: "Futura", size: 15.0)
         htmlLabel.sizeToFit()
         contentView.addSubview(htmlLabel)
+        
         
     /*
         NSLayoutConstraint(item: htmlLabel, attribute: .Top, relatedBy: .Equal, toItem: htmlLabel.superview, attribute: .Top, multiplier: 1.0, constant: 15.0).active = true

@@ -11,6 +11,7 @@ import UIKit
 import DrawerController
 import AMScrollingNavbar
 import Parse
+import Material
 
 // If you want to use any of the UI components, uncomment this line
 // import ParseUI
@@ -122,7 +123,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window?.rootViewController = drawerCon
         self.window?.makeKeyAndVisible()
         
+        UINavigationBar.appearance().titleTextAttributes = [
+            NSFontAttributeName: UIFont(name: "Futura", size: 20)!,
+            NSForegroundColorAttributeName : MaterialColor.white
+        ]
         
+        UINavigationBar.appearance().barTintColor = MaterialColor.indigo.base
+        UINavigationBar.appearance().tintColor = MaterialColor.white
         
         return true
     }

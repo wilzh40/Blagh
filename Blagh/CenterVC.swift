@@ -21,6 +21,9 @@ class CenterVC: GenericTable {
         if let navigationController = self.navigationController as? ScrollingNavigationController {
             navigationController.followScrollView(tableView, delay: 50.0)
             navigationController.title = "BLAGH"
+         
+              //  NSFontAttributeName: UIFont(name: "Comic_Andy", size: 22)]
+
         }
         
         let barButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: Selector("addPost"))

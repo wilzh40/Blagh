@@ -11,6 +11,7 @@ import UIKit
 import Parse
 import HMSegmentedControl
 
+
 class PostEditorVC : GenericTable, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     var segmentedControl : HMSegmentedControl?
     
@@ -36,6 +37,8 @@ class PostEditorVC : GenericTable, UIImagePickerControllerDelegate, UINavigation
         let frame = UIScreen.mainScreen().bounds
         segmentedControl!.frame = CGRectMake(frame.minX, frame.maxY - 60,
             frame.width, 60)
+        
+
         self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 60, 0);
         
         view.addSubview(segmentedControl!)
@@ -45,7 +48,7 @@ class PostEditorVC : GenericTable, UIImagePickerControllerDelegate, UINavigation
         
         // Config height
         tableView.rowHeight = UITableViewAutomaticDimension
-        tableView.estimatedRowHeight = 150.0
+        tableView.estimatedRowHeight = 125.0
         tableView.separatorStyle = .None
 
      

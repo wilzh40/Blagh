@@ -56,7 +56,7 @@ class ImageEditorVC : UIViewController, UINavigationControllerDelegate, UIImageP
     func prepareCameraButton() {
         let image: UIImage? = UIImage(named: "ic_photo_camera_white_36pt")
         let button: FabButton = FabButton()
-        button.backgroundColor = MaterialColor.blue.accent3
+        button.backgroundColor = MaterialColor.indigo.accent3
         button.setImage(image, forState: .Normal)
         button.setImage(image, forState: .Highlighted)
         
@@ -72,7 +72,7 @@ class ImageEditorVC : UIViewController, UINavigationControllerDelegate, UIImageP
     func preparePhotoLibraryButton() {
         let image: UIImage? = UIImage(named: "ic_photo_camera_white_36pt")
         let button: FabButton = FabButton()
-        button.backgroundColor = MaterialColor.blue.accent3
+        button.backgroundColor = MaterialColor.indigo.accent3
         button.setImage(image, forState: .Normal)
         button.setImage(image, forState: .Highlighted)
         
