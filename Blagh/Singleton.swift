@@ -79,6 +79,37 @@ class Singleton {
 
     }
     
+    func pruneElements() {
+        var query = PFQuery(className:"Element")
+        query.whereKey("type", equalTo:1)
+        query.whereKeyDoesNotExist("image")
+        query.findObjectsInBackgroundWithBlock({
+            (objects: [PFObject]?, error: NSError?) -> Void in
+            
+            if error == nil {
+                for o in objects! {
+                    o.deleteInBackground()
+                }
+            }
+
+        })
+        var query2 = PFQuery(className:"Element")
+        query2.whereKey("type", equalTo:2)
+        query2.whereKeyDoesNotExist("Video")
+        query2.findObjectsInBackgroundWithBlock({
+            (objects: [PFObject]?, error: NSError?) -> Void in
+            
+            if error == nil {
+                for o in objects! {
+                    o.deleteInBackground()
+                }
+            }
+            
+        })
+
+
+    }
+    
     func saveData() {
     
     }

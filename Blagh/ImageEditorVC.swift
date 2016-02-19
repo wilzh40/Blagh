@@ -42,8 +42,12 @@ class ImageEditorVC : UIViewController, UINavigationControllerDelegate, UIImageP
         let imageData = UIImagePNGRepresentation(image!)
         let imageFile = PFFile(name:"image.png", data:imageData!)! as PFFile
         element["image"] = imageFile
+        
+        
         element.saveInBackground()
         Singleton.sharedInstance.loadElements()
+        
+        
         self.navigationController?.popViewControllerAnimated(true)
         
     }

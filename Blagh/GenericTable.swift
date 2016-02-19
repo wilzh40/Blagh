@@ -28,6 +28,8 @@ class GenericTable : UITableViewController, DataDelegate  {
       
     }
     
+
+    
     func orderDidChange() {
         
     }
@@ -121,6 +123,7 @@ class GenericTable : UITableViewController, DataDelegate  {
     }
     // Animation function
     override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        /*
             cell.layer.transform = CATransform3DMakeScale(0.1,0.1,1)
             UIView.animateWithDuration(0.3, animations: {
                 cell.layer.transform = CATransform3DMakeScale(1.05,1.05,1)
@@ -129,7 +132,8 @@ class GenericTable : UITableViewController, DataDelegate  {
                         cell.layer.transform = CATransform3DMakeScale(1,1,1)
                     })
             })
-    
+    */
+        
     }
     
     // Data for delegate
@@ -139,14 +143,14 @@ class GenericTable : UITableViewController, DataDelegate  {
         SwiftSpinner.hide()
         self.tableView.reloadData()
         //tableView.layoutSubviews()
+        /*
         if tableData.count >= 2 {
             // hacky way to reformat
             tableView.moveRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0), toIndexPath: NSIndexPath(forRow: 1, inSection: 0))
             tableView.moveRowAtIndexPath(NSIndexPath(forRow: 1, inSection: 0), toIndexPath:  NSIndexPath(forRow: 0, inSection: 0))
 
 
-
-        }
+        }*/
         
         
         
@@ -157,6 +161,28 @@ class GenericTable : UITableViewController, DataDelegate  {
     
     override func viewWillAppear(animated: Bool) {
        //self.tableView.reloadData()
+        tableView.reloadData()
+        let cells = tableView.visibleCells
+        let tableHeight: CGFloat = tableView.bounds.size.height
+        for i in cells {
+            let cell: UITableViewCell = i as UITableViewCell
+            cell.transform = CGAffineTransformMakeTranslation(0, tableHeight)
+        }
+        
+        var index = 0
+        
+        for a in cells {
+        let cell: UITableViewCell = a as UITableViewCell
+        cell.layer.transform = CATransform3DMakeScale(0.1,0.1,1)
+        UIView.animateWithDuration(0.3, animations: {
+            cell.layer.transform = CATransform3DMakeScale(1.05,1.05,1)
+            },completion: { finished in
+                UIView.animateWithDuration(0.1, animations: {
+                    cell.layer.transform = CATransform3DMakeScale(1,1,1)
+                })
+        })
+            index += 1
+        }
     }
     
     //Draggable

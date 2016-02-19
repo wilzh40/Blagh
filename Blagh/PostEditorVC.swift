@@ -157,6 +157,7 @@ class PostEditorVC : GenericTable, UIImagePickerControllerDelegate, UINavigation
         
         tableData.addObject(element)
         
+        
         if let currentPost = Singleton.sharedInstance.currentPost {
             currentPost.incrementKey("elementCount")
             currentPost.addUniqueObjectsFromArray(tableData as [AnyObject], forKey: "elements")
@@ -168,6 +169,7 @@ class PostEditorVC : GenericTable, UIImagePickerControllerDelegate, UINavigation
             (success: Bool, error: NSError?) -> Void in
             if (success) {
                 print("Saved Element")
+                self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: self.tableData.count, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Automatic)
             } else {
                 // There was a problem, check error.description
             }

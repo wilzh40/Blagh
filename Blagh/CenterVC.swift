@@ -54,12 +54,18 @@ class CenterVC: GenericTable {
             if (success) {
                 
                 self.tableData.insertObject(post, atIndex: 0)
+                self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Automatic)
                 print("Saved Post")
             } else {
                 // There was a problem, check error.description
             }
         }
-        self.tableView.reloadData()
+        
+
+       
+
+//        self.tableView.reloadData()
+        
     }
     
     override func didReceiveMemoryWarning() {

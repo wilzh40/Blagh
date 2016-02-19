@@ -96,7 +96,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         
         
-        
+        Singleton.sharedInstance.pruneElements()
         
         let storyBoard = UIStoryboard(name: "Main", bundle: nil)
         
