@@ -144,6 +144,11 @@ class PostEditorVC : GenericTable, UIImagePickerControllerDelegate, UINavigation
             
             break
         case 2:
+            let videoEditorVC = VideoEditorVC()
+            videoEditorVC.element = element as? PFObject
+            //imageEditorVC.imgView.image = cell.imgView.image
+            videoEditorVC.firstImage = true
+            self.navigationController?.pushViewController(videoEditorVC, animated: true)
             
             break
         default: break
@@ -206,7 +211,7 @@ class PostEditorVC : GenericTable, UIImagePickerControllerDelegate, UINavigation
             
             
             let cell = ImageCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "imageCell") as ImageCell
-            if let imageData = element.valueForKey("image")! as? PFFile {
+            if let imageData = element.valueForKey("image") as? PFFile {
                 imageData.getDataInBackgroundWithBlock({
                     (imageData: NSData?, error: NSError?) -> Void in
                     if (error == nil && imageData != nil) {
@@ -222,9 +227,9 @@ class PostEditorVC : GenericTable, UIImagePickerControllerDelegate, UINavigation
             break
             
         case 2:
-            let cell = SAScrollTableViewCell(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.width, 220))
-            if let video = NSBundle.mainBundle().URLForResource(element.valueForKey("video") as? String, withExtension: ".mov"){
+            let cell = SAScrollTableViewCell(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.width, 230))
 
+            if let video = NSBundle.mainBundle().URLForResource(element.valueForKey("video") as? String, withExtension: ".mov"){
                 cell.setMedia([SAScrollMedia.mediaWithType(SAScrollMediaType.VideoAsset, object: video)])
                 
 

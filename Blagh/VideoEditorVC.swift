@@ -29,6 +29,7 @@ class VideoEditorVC : UIViewController, UINavigationControllerDelegate, UIImageP
     let imgView = UIImageView()
     var element: PFObject!
     var firstImage: Bool = false
+    var videoURL: String?
     
     override func viewDidLoad() {
         view.backgroundColor = MaterialColor.white
@@ -51,10 +52,10 @@ class VideoEditorVC : UIViewController, UINavigationControllerDelegate, UIImageP
         self.navigationItem.setRightBarButtonItem(barButton, animated: true)
     }
     func done() {
-        let image = imgView.image?.resize(toWidth: 200) //Hacky way to ensure file size
+       /* let image = imgView.image?.resize(toWidth: 200) //Hacky way to ensure file size
         let imageData = UIImagePNGRepresentation(image!)
-        let imageFile = PFFile(name:"image.png", data:imageData!)! as PFFile
-        element["image"] = imageFile
+        let imageFile = PFFile(name:"image.png", data:imageData!)! as PFFile*/
+        element["video"] = videoURL!
         element.saveInBackground()
         Singleton.sharedInstance.loadElements()
         self.navigationController?.popViewControllerAnimated(true)
@@ -81,7 +82,7 @@ class VideoEditorVC : UIViewController, UINavigationControllerDelegate, UIImageP
         }*/
         print(info)
         
-        dismissViewControllerAnimated(true, completion: nil)
+        videoURL = (info[UIImagePickerControllerMediaURL] as! NSURL).path! as String
         self.dismissViewControllerAnimated(true, completion:nil)
         //Here you can manipulate the adquired video
     }
