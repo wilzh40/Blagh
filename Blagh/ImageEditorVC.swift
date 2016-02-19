@@ -76,7 +76,7 @@ class ImageEditorVC : UIViewController, UINavigationControllerDelegate, UIImageP
     
     
     func preparePhotoLibraryButton() {
-        let image: UIImage? = UIImage(named: "ic_photo_camera_white_36pt")
+        let image: UIImage? = UIImage(named: "ic_menu_white")
         let button: FabButton = FabButton()
         button.backgroundColor = MaterialColor.indigo.accent3
         button.setImage(image, forState: .Normal)

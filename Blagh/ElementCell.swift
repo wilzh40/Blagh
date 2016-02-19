@@ -117,7 +117,7 @@ class ImageCell: ElementCell {
                 
             })
         })*/
-        imgView.frame = CGRectMake(10, 0, (self.window?.frame.width)! - 20, 200)
+        imgView.frame = CGRectMake(10, 0,  UIScreen.mainScreen().bounds.width - 20, 200)
         imgView.image = data//.resize(toWidth:200)
         imgSet = true
 
