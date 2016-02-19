@@ -230,6 +230,7 @@ class PostEditorVC : GenericTable, UIImagePickerControllerDelegate, UINavigation
                 currentPost.saveInBackground()
             }
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+
             //tableView.reloadData()
             
             

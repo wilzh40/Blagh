@@ -103,7 +103,7 @@ class ImageCell: ElementCell {
         if imgSet {
             return AVMakeRectWithAspectRatioInsideRect(imgView.image!.size, imgView.bounds).size;
         }
-        return CGSize(width: 100, height: 150)
+        return CGSize(width: 100, height: 185)
     }
         
     func loadImage(data: UIImage) {
