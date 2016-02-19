@@ -57,8 +57,8 @@ class CaptureVC : UIViewController, CaptureViewDelegate, CaptureSessionDelegate 
         super.viewDidLoad()
         prepareView()
         prepareCaptureButton()
-        //prepareCameraButton()
-        //prepareVideoButton()
+        prepareCameraButton()
+        prepareVideoButton()
         prepareCloseButton()
         prepareSwitchCamerasButton()
         prepareFlashButton()
@@ -251,6 +251,7 @@ class CaptureVC : UIViewController, CaptureViewDelegate, CaptureSessionDelegate 
         captureView.translatesAutoresizingMaskIntoConstraints = false
         captureView.delegate = self
         captureView.captureSession.delegate = self
+        captureView.captureMode = .Photo
         MaterialLayout.alignToParent(view, child: captureView)
     }
     
@@ -279,8 +280,8 @@ class CaptureVC : UIViewController, CaptureViewDelegate, CaptureSessionDelegate 
         detailLabel.font = RobotoFont.regularWithSize(12)
         navigationBarView.detailLabel = detailLabel
         
-        navigationBarView.leftButtons = [closeButton]
-        navigationBarView.rightButtons = [switchCamerasButton, flashButton]
+        navigationBarView.leftControls = [closeButton]
+        navigationBarView.rightControls = [switchCamerasButton, flashButton]
         
         view.addSubview(navigationBarView)
         navigationBarView.translatesAutoresizingMaskIntoConstraints = false
@@ -297,7 +298,7 @@ class CaptureVC : UIViewController, CaptureViewDelegate, CaptureSessionDelegate 
         captureButton.height = 72
         captureButton.pulseColor = MaterialColor.white
         captureButton.backgroundColor = MaterialColor.red.darken1.colorWithAlphaComponent(0.3)
-        captureButton.borderWidth = .Border2
+        captureButton.borderWidth = 4.0
         captureButton.borderColor = MaterialColor.white
         captureButton.depth = .None
         

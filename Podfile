@@ -22,6 +22,9 @@ pod 'MDHTMLLabel'
 pod 'FYHTMLTextView'
 
 pod "SAScrollTableViewCell"
+pod 'Player'
+pod 'Material'
+
 
 end
 

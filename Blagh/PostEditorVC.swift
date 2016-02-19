@@ -227,15 +227,27 @@ class PostEditorVC : GenericTable, UIImagePickerControllerDelegate, UINavigation
             break
             
         case 2:
+            let cell = VideoCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "videoCell") as VideoCell
+            if let str = element.valueForKey("video") as? String {
+                cell.videoURL = str
+                cell.loadItem(str)
+                return cell
+            }
+    
+           
+
+        
+            /*
             let cell = SAScrollTableViewCell(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.width, 230))
 
-            if let video = NSBundle.mainBundle().URLForResource(element.valueForKey("video") as? String, withExtension: ".mov"){
+            if let video = NSBundle.mainBundle().URLForResource(element.valueForKey("video") as? String, withExtension: "mov"){
                 cell.setMedia([SAScrollMedia.mediaWithType(SAScrollMediaType.VideoAsset, object: video)])
-                
+                return cell
 
             } else {
                 print("Error, can't load video")
-            }
+            }*/
+            
             break
 
             //            break
@@ -265,6 +277,14 @@ class PostEditorVC : GenericTable, UIImagePickerControllerDelegate, UINavigation
             imageEditorVC.firstImage = false
              self.navigationController?.pushViewController(imageEditorVC, animated: true)
             break
+        case 2:
+            let cell = tableView.cellForRowAtIndexPath(indexPath) as! VideoCell
+            let videoEditorVC = VideoEditorVC()
+            videoEditorVC.element = element as? PFObject
+            videoEditorVC.videoURL = cell.videoURL
+            videoEditorVC.firstImage = false
+            self.navigationController?.pushViewController(videoEditorVC, animated: true)
+
         default:
             break
         }

@@ -23,19 +23,21 @@ import AVFoundation
 import AVKit
 import MediaPlayer
 import MobileCoreServices
+import Player
 
-class VideoEditorVC : UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate, CameraDelegate {
+class VideoEditorVC : UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate, CameraDelegate, PlayerDelegate {
     let imagePicker = UIImagePickerController()
     let imgView = UIImageView()
     var element: PFObject!
     var firstImage: Bool = false
     var videoURL: String?
+    let player = Player()
     
     override func viewDidLoad() {
         view.backgroundColor = MaterialColor.white
         
         imagePicker.delegate = self
-        
+        /*
         imgView.frame = view.bounds
         imgView.contentMode = .Center;
         if !firstImage {
@@ -43,14 +45,28 @@ class VideoEditorVC : UIViewController, UINavigationControllerDelegate, UIImageP
                 imgView.contentMode = UIViewContentMode.ScaleAspectFit;
             }
         }
-        view.addSubview(imgView)
+        view.addSubview(imgView)*/
+        self.player.delegate = self
+        self.player.view.frame = self.view.bounds
         
+        self.addChildViewController(self.player)
+        self.view.addSubview(self.player.view)
+        self.player.didMoveToParentViewController(self)
+        if !firstImage {
+            self.player.setUrl(NSURL(string:videoURL!)!)
+            self.player.playFromBeginning()
+            self.player.fillMode = "AVLayerVideoGravityResizeAspect"
+
+        }
         prepareCameraButton()
         preparePhotoLibraryButton()
         
         let barButton = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: Selector("done"))
         self.navigationItem.setRightBarButtonItem(barButton, animated: true)
     }
+    
+    
+    
     func done() {
        /* let image = imgView.image?.resize(toWidth: 200) //Hacky way to ensure file size
         let imageData = UIImagePNGRepresentation(image!)
@@ -82,7 +98,11 @@ class VideoEditorVC : UIViewController, UINavigationControllerDelegate, UIImageP
         }*/
         print(info)
         
-        videoURL = (info[UIImagePickerControllerMediaURL] as! NSURL).absoluteString as String
+        videoURL = (info[UIImagePickerControllerMediaURL] as! NSURL).path!/*!.stringByReplacingOccurrencesOfString("trim.", withString: "", options: [], range: nil )*/ as String
+        if (UIVideoAtPathIsCompatibleWithSavedPhotosAlbum (videoURL!)) {
+            UISaveVideoAtPathToSavedPhotosAlbum (videoURL!, nil, nil, nil);
+        }
+
         self.dismissViewControllerAnimated(true, completion:nil)
         //Here you can manipulate the adquired video
     }
@@ -156,5 +176,22 @@ class VideoEditorVC : UIViewController, UINavigationControllerDelegate, UIImageP
             imgView.contentMode = .ScaleAspectFit
             imgView.image = img
         }
+    }
+    
+    // Player delegate functions
+    func playerBufferingStateDidChange(player: Player) {
+        
+    }
+    func playerPlaybackDidEnd(player: Player) {
+        
+    }
+    func playerPlaybackStateDidChange(player: Player) {
+        
+    }
+    func playerPlaybackWillStartFromBeginning(player: Player) {
+        
+    }
+    func playerReady(player: Player) {
+        
     }
 }
