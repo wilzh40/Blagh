@@ -1,4 +1,13 @@
 //
+//  VideoEditorVC.swift
+//  Blagh
+//
+//  Created by Wilson Zhao on 2/19/16.
+//  Copyright © 2016 Innogen. All rights reserved.
+//
+
+import Foundation
+//
 //  ImageEditorVC.swift
 //  Blagh
 //
@@ -10,8 +19,12 @@ import Foundation
 import UIKit
 import Material
 import Parse
+import AVFoundation
+import AVKit
+import MediaPlayer
+import MobileCoreServices
 
-class ImageEditorVC : UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate, CameraDelegate {
+class VideoEditorVC : UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate, CameraDelegate {
     let imagePicker = UIImagePickerController()
     let imgView = UIImageView()
     var element: PFObject!
@@ -46,12 +59,49 @@ class ImageEditorVC : UIViewController, UINavigationControllerDelegate, UIImageP
         Singleton.sharedInstance.loadElements()
         self.navigationController?.popViewControllerAnimated(true)
         
+        
     }
+    
+
     func handlePhotoLibraryButton() {
         imagePicker.allowsEditing = false
         imagePicker.sourceType = .PhotoLibrary
+        imagePicker.mediaTypes = [kUTTypeMovie as NSString as String]
+
         presentViewController(imagePicker, animated: true, completion: nil)
         
+    }
+    
+    
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+        /*
+        if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            imgView.contentMode = .ScaleAspectFit
+            imgView.image = pickedImage
+        }*/
+        print(info)
+        
+        dismissViewControllerAnimated(true, completion: nil)
+        self.dismissViewControllerAnimated(true, completion:nil)
+        //Here you can manipulate the adquired video
+    }
+    
+    func startMediaBrowserFromViewController(viewController: UIViewController, usingDelegate delegate: protocol<UINavigationControllerDelegate, UIImagePickerControllerDelegate>) -> Bool {
+        // 1
+        if UIImagePickerController.isSourceTypeAvailable(.SavedPhotosAlbum) == false {
+            return false
+        }
+        
+        // 2
+        let mediaUI = UIImagePickerController()
+        mediaUI.sourceType = .SavedPhotosAlbum
+        mediaUI.mediaTypes = [kUTTypeMovie as NSString as String]
+        mediaUI.allowsEditing = true
+        mediaUI.delegate = delegate
+        
+        // 3
+        presentViewController(mediaUI, animated: true, completion: nil)
+        return true
     }
     
     func handleCameraButton() {
@@ -94,16 +144,7 @@ class ImageEditorVC : UIViewController, UINavigationControllerDelegate, UIImageP
         button.addTarget(self, action: "handlePhotoLibraryButton", forControlEvents: .TouchUpInside)
         
     }
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
-        if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
-            imgView.contentMode = .ScaleAspectFit
-            imgView.image = pickedImage
-        }
-        
-        dismissViewControllerAnimated(true, completion: nil)
-        
-    }
-    
+
     
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {
         dismissViewControllerAnimated(true, completion: nil)

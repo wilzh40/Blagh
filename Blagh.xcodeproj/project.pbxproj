@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4C5D25B46C2AC69095A69689 /* Pods_Blagh.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E38BDA17BE5EC022DED8363C /* Pods_Blagh.framework */; };
+		771A06301C76D97500FE9105 /* VideoEditorVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771A062F1C76D97500FE9105 /* VideoEditorVC.swift */; };
 		77AFAC801C53F887008FC89C /* GenericTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77AFAC7F1C53F887008FC89C /* GenericTable.swift */; };
 		77AFAC821C540164008FC89C /* PostEditorVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77AFAC811C540164008FC89C /* PostEditorVC.swift */; };
 		77AFAC841C54048F008FC89C /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 77AFAC831C54048F008FC89C /* libsqlite3.dylib */; };
@@ -52,6 +53,7 @@
 
 /* Begin PBXFileReference section */
 		61EACAFA28E3083EA7388738 /* Pods-Blagh.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Blagh.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Blagh/Pods-Blagh.debug.xcconfig"; sourceTree = "<group>"; };
+		771A062F1C76D97500FE9105 /* VideoEditorVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoEditorVC.swift; sourceTree = "<group>"; };
 		77AFAC7F1C53F887008FC89C /* GenericTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenericTable.swift; sourceTree = "<group>"; };
 		77AFAC811C540164008FC89C /* PostEditorVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostEditorVC.swift; sourceTree = "<group>"; };
 		77AFAC831C54048F008FC89C /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = ../../../../usr/lib/libsqlite3.dylib; sourceTree = "<group>"; };
@@ -203,6 +205,7 @@
 				77C4D3311C51576F0082168B /* TextEditorVC.swift */,
 				77C582AB1C6FF4BB00081753 /* CaptureVC.swift */,
 				77C582B61C6FFAF700081753 /* ImageEditorVC.swift */,
+				771A062F1C76D97500FE9105 /* VideoEditorVC.swift */,
 				77AFAC811C540164008FC89C /* PostEditorVC.swift */,
 				77AFAC871C543A1E008FC89C /* TextCell.swift */,
 				77E2AE3F1C50A9AE006EE318 /* SettingsVC.swift */,
@@ -415,6 +418,7 @@
 				77C4D3321C5157700082168B /* TextEditorVC.swift in Sources */,
 				77E2AE091C50A88E006EE318 /* AppDelegate.swift in Sources */,
 				77AFAC861C543922008FC89C /* ElementCell.swift in Sources */,
+				771A06301C76D97500FE9105 /* VideoEditorVC.swift in Sources */,
 				77E2AE391C50A92A006EE318 /* ImageLoader.swift in Sources */,
 				77E2AE421C50A9B4006EE318 /* CenterVC.swift in Sources */,
 				77AFAC881C543A1E008FC89C /* TextCell.swift in Sources */,

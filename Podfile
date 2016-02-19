@@ -21,5 +21,7 @@ pod 'HMSegmentedControl'
 pod 'MDHTMLLabel'
 pod 'FYHTMLTextView'
 
+pod "SAScrollTableViewCell"
+
 end
 

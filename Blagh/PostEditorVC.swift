@@ -10,10 +10,12 @@ import Foundation
 import UIKit
 import Parse
 import HMSegmentedControl
+import SAScrollTableViewCell
 
 
 class PostEditorVC : GenericTable, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
     var segmentedControl : HMSegmentedControl?
+
     
     
     enum elementType: Int {
@@ -111,6 +113,14 @@ class PostEditorVC : GenericTable, UIImagePickerControllerDelegate, UINavigation
             element["text"] = "Click to edit"
             break
         case 1:
+            
+            let imageEditorVC = ImageEditorVC()
+            imageEditorVC.element = element as? PFObject
+            //imageEditorVC.imgView.image = cell.imgView.image
+            imageEditorVC.firstImage = true
+            self.navigationController?.pushViewController(imageEditorVC, animated: true)
+
+            /*
             let url = NSURL(string: "https://upload.wikimedia.org/wikipedia/en/1/10/Apophysis-100303-104.jpg")
             let data = NSData(contentsOfURL: url!) //make sure your image in this url does exist, otherwise unwrap in a if let check
             let image = UIImage(data: data!)?.resize(toWidth: 200)
@@ -129,10 +139,13 @@ class PostEditorVC : GenericTable, UIImagePickerControllerDelegate, UINavigation
                     element["image"] = imageFile
                 }
             }*/
+*/
             
             
             break
-        case 2: break
+        case 2:
+            
+            break
         default: break
             
         }
@@ -208,6 +221,19 @@ class PostEditorVC : GenericTable, UIImagePickerControllerDelegate, UINavigation
             return cell
             break
             
+        case 2:
+            let cell = SAScrollTableViewCell(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.width, 220))
+            if let video = NSBundle.mainBundle().URLForResource(element.valueForKey("video") as? String, withExtension: ".mov"){
+
+                cell.setMedia([SAScrollMedia.mediaWithType(SAScrollMediaType.VideoAsset, object: video)])
+                
+
+            } else {
+                print("Error, can't load video")
+            }
+            break
+
+            //            break
         default:
             break
             
@@ -231,6 +257,7 @@ class PostEditorVC : GenericTable, UIImagePickerControllerDelegate, UINavigation
             let imageEditorVC = ImageEditorVC()
             imageEditorVC.element = element as? PFObject
             imageEditorVC.imgView.image = cell.imgView.image
+            imageEditorVC.firstImage = false
              self.navigationController?.pushViewController(imageEditorVC, animated: true)
             break
         default:
