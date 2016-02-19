@@ -84,6 +84,7 @@ class PostEditorVC : GenericTable, UIImagePickerControllerDelegate, UINavigation
             let image = UIImage(data: data!)?.resize(toWidth: 200)
             let imageData = UIImagePNGRepresentation(image!)
             let imageFile = PFFile(name:"image.png", data:imageData!)! as PFFile
+            imageFile.saveInBackground()
             element["image"] = imageFile
             /*UIImage.contentsOfURL(NSURL(string: "http://www.cosmicmind.io/CM/iTunesArtwork.png")!) { (image: UIImage?, error: NSError?) in
                 if let v: UIImage = image {
@@ -112,6 +113,7 @@ class PostEditorVC : GenericTable, UIImagePickerControllerDelegate, UINavigation
             currentPost.saveInBackground()
         }
         //Save data
+        
         element.saveInBackgroundWithBlock {
             (success: Bool, error: NSError?) -> Void in
             if (success) {
@@ -228,7 +230,7 @@ class PostEditorVC : GenericTable, UIImagePickerControllerDelegate, UINavigation
                 currentPost.saveInBackground()
             }
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-            tableView.reloadData()
+            //tableView.reloadData()
             
             
         }

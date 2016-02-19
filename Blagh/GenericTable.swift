@@ -121,8 +121,6 @@ class GenericTable : UITableViewController, DataDelegate  {
     }
     // Animation function
     override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        if indexPath.row == tableData.count - 1 && !newPostAnimated {
-            newPostAnimated = true
             cell.layer.transform = CATransform3DMakeScale(0.1,0.1,1)
             UIView.animateWithDuration(0.3, animations: {
                 cell.layer.transform = CATransform3DMakeScale(1.05,1.05,1)
@@ -131,7 +129,7 @@ class GenericTable : UITableViewController, DataDelegate  {
                         cell.layer.transform = CATransform3DMakeScale(1,1,1)
                     })
             })
-        }
+    
     }
     
     // Data for delegate

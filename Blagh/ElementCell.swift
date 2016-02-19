@@ -9,6 +9,8 @@
 import Foundation
 import UIKit
 import MDHTMLLabel
+import AVFoundation
+
 class ElementCell : UITableViewCell {
    // @IBOutlet var webView: UIWebView? = UIWebView()
 
@@ -93,7 +95,17 @@ class TextCell: ElementCell, UIWebViewDelegate, MDHTMLLabelDelegate {
 
 class ImageCell: ElementCell {
     let imgView : UIImageView = UIImageView()
-
+    var imgSet = false
+    var img: UIImage?
+    
+   
+    override func sizeThatFits(size: CGSize) -> CGSize {
+        if imgSet {
+            return AVMakeRectWithAspectRatioInsideRect(imgView.image!.size, imgView.bounds).size;
+        }
+        return CGSize(width: 100, height: 150)
+    }
+        
     func loadImage(data: UIImage) {
         /*
         ImageLoader.sharedLoader.imageForUrl(data, completionHandler:{(image: UIImage?, url: String) in
@@ -105,18 +117,30 @@ class ImageCell: ElementCell {
         })*/
         imgView.frame = CGRectMake(10, 0, (self.window?.frame.width)! - 20, 200)
         imgView.image = data//.resize(toWidth:200)
-        imgView.contentMode = .Center;
+        imgSet = true
+
+        imgView.contentMode = .ScaleAspectFit; //change later
         if (imgView.bounds.size.width > data.size.width && imgView.bounds.size.height > data.size.height) {
-            imgView.contentMode = UIViewContentMode.ScaleAspectFit;
+            imgView.contentMode = UIViewContentMode.ScaleAspectFit
         }
+        imgView.frame = AVMakeRectWithAspectRatioInsideRect(data.size, imgView.bounds);
+        imgView.clipsToBounds = true
+        self.clipsToBounds = true
+        imgView.autoresizingMask = .None // I'm not sure if I have to change it
+        imgView.layoutMargins = UIEdgeInsetsZero
+        imgView.layer.borderColor = UIColor.grayColor().CGColor
+        imgView.layer.borderWidth = 1
+
         self.contentView.addSubview(imgView)
 
-        imgView.leadingAnchor.constraintEqualToAnchor(contentView.trailingAnchor, constant: 8.0).active = true
+      /*  imgView.leadingAnchor.constraintEqualToAnchor(contentView.trailingAnchor, constant: 8.0).active = true
         imgView.trailingAnchor.constraintEqualToAnchor(contentView.trailingAnchor).active = true
         imgView.topAnchor.constraintEqualToAnchor(contentView.topAnchor).active = true
-        imgView.bottomAnchor.constraintEqualToAnchor(contentView.bottomAnchor).active = true
+        imgView.bottomAnchor.constraintEqualToAnchor(contentView.bottomAnchor).active = true*/
+        imgView.heightAnchor.constraintEqualToAnchor(contentView.heightAnchor, multiplier: 1).active = true
     }
 }
+
 
 class VideoCell: ElementCell {
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {

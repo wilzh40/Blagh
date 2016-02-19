@@ -34,8 +34,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Remove this line if you don't want to use Local Datastore features or want to use cachePolicy.
         Parse.enableLocalDatastore()
         
-        Parse.setApplicationId("KyRljFwGqXRjKeixQ0DXnCV5LsRF0tYtVEjnujnW",
-            clientKey: "ExnnGyOQj4DXJa8TVQpdCsmmlPtkNkVCFoR6yhic")
+        Parse.setApplicationId("LkbvLfyu1RJYZp7txUwvni6sfdMmYd7ojAfvZEko",
+            clientKey: "gGuy4FvKz3zmwefhCfqYb7bHyJw6uMInqUteXKQu")
         
         PFUser.enableAutomaticUser()
         
@@ -43,7 +43,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // If you would like all objects to be private by default, remove this line.
         defaultACL.publicReadAccess = true
-        
+        defaultACL.publicWriteAccess = true
         PFACL.setDefaultACL(defaultACL, withAccessForCurrentUser: true)
         
         if application.applicationState != UIApplicationState.Background {

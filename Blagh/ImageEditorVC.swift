@@ -35,7 +35,7 @@ class ImageEditorVC : UIViewController, UINavigationControllerDelegate, UIImageP
         self.navigationItem.setRightBarButtonItem(barButton, animated: true)
     }
     func done() {
-        let image = imgView.image
+        let image = imgView.image?.resize(toWidth: 200) //Hacky way to ensure file size
         let imageData = UIImagePNGRepresentation(image!)
         let imageFile = PFFile(name:"image.png", data:imageData!)! as PFFile
         element["image"] = imageFile
