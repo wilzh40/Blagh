@@ -33,6 +33,10 @@ import UIKit
 import Material
 import Parse
 import AVFoundation
+@objc(CameraDelegate)
+public protocol CameraDelegate {
+    optional func captureViewDidEnd(image: UIImage?, videoURL: NSURL?)
+}
 
 class CaptureVC : UIViewController, CaptureViewDelegate, CaptureSessionDelegate {
     lazy var captureView: CaptureView = CaptureView()
@@ -43,13 +47,18 @@ class CaptureVC : UIViewController, CaptureViewDelegate, CaptureSessionDelegate 
     lazy var switchCamerasButton: FlatButton = FlatButton()
     lazy var flashButton: FlatButton = FlatButton()
     lazy var captureButton: FabButton = FabButton()
+    var image: UIImage?
+    var videoURL: NSURL?
+    var delegate: CameraDelegate?
+    
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
         prepareView()
         prepareCaptureButton()
-        prepareCameraButton()
-        prepareVideoButton()
+        //prepareCameraButton()
+        //prepareVideoButton()
         prepareCloseButton()
         prepareSwitchCamerasButton()
         prepareFlashButton()
@@ -69,6 +78,10 @@ class CaptureVC : UIViewController, CaptureViewDelegate, CaptureSessionDelegate 
      */
     func captureStillImageAsynchronously(capture: CaptureSession, image: UIImage) {
         print("Capture Image \(image)")
+        self.image = image
+        self.delegate?.captureViewDidEnd!(image, videoURL: nil)
+        dismissViewControllerAnimated(true, completion: nil)
+        
     }
     
     /**
@@ -102,6 +115,11 @@ class CaptureVC : UIViewController, CaptureViewDelegate, CaptureSessionDelegate 
         videoButton.hidden = false
         switchCamerasButton.hidden = false
         flashButton.hidden = false
+        
+        self.videoURL = outputFileURL
+        
+        dismissViewControllerAnimated(true, completion: nil)
+        
     }
     
     func captureViewDidStartRecordTimer(captureView: CaptureView) {

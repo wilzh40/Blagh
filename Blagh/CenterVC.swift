@@ -33,6 +33,10 @@ class CenterVC: GenericTable {
 
     }
     
+    override func viewDidAppear(animated: Bool) {
+       // Singleton.sharedInstance.loadPosts() // For overwriting titles
+    }
+    
    
     func addPost() {
 
@@ -67,7 +71,7 @@ class CenterVC: GenericTable {
         let post: PFObject = (tableData[indexPath.row] as? PFObject)!
         let cell: UITableViewCell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "protoCell")
         cell.textLabel?.text = post["title"] as? String
-        cell.textLabel?.font = UIFont(name:"Futura",size:12.00)
+        cell.textLabel?.font = UIFont(name:"Futura",size:15.00)
         
   
         
@@ -79,7 +83,7 @@ class CenterVC: GenericTable {
         } else {
             cell.detailTextLabel?.text = "Created at:\(D.stringFromDate(post.createdAt!))"
         }
-        cell.detailTextLabel?.font = UIFont(name:"Futura",size:9.00)
+        cell.detailTextLabel?.font = UIFont(name:"Futura",size: 11.00)
         cell.detailTextLabel?.alpha = 0.4
         cell.textLabel?.lineBreakMode = NSLineBreakMode.ByWordWrapping
         cell.textLabel?.numberOfLines = 2

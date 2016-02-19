@@ -11,7 +11,7 @@ import UIKit
 import Material
 import Parse
 
-class ImageEditorVC : UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
+class ImageEditorVC : UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate, CameraDelegate {
     let imagePicker = UIImagePickerController()
     let imgView = UIImageView()
     var element: PFObject!
@@ -50,7 +50,13 @@ class ImageEditorVC : UIViewController, UINavigationControllerDelegate, UIImageP
     }
     
     func handleCameraButton() {
+        var captureVC = CaptureVC()
+        captureVC.delegate = self
+        captureVC.captureView.captureMode = .Photo
         
+        //captureVC.captureView
+        presentViewController(captureVC, animated: true, completion: nil)
+    
     }
     
     func prepareCameraButton() {
@@ -98,4 +104,10 @@ class ImageEditorVC : UIViewController, UINavigationControllerDelegate, UIImageP
         dismissViewControllerAnimated(true, completion: nil)
     }
     
+    func captureViewDidEnd(image: UIImage?, videoURL: NSURL?) {
+        if let img = image {
+            imgView.contentMode = .ScaleAspectFit
+            imgView.image = img
+        }
+    }
 }
