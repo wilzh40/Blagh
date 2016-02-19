@@ -194,8 +194,8 @@ class VideoCell: ElementCell, PlayerDelegate {
         self.clipsToBounds = true
         imgView.autoresizingMask = .None // I'm not sure if I have to change it
         imgView.layoutMargins = UIEdgeInsetsZero
-        imgView.layer.borderColor = UIColor.grayColor().CGColor
-        imgView.layer.borderWidth = 2
+        imgView.layer.borderColor = UIColor.blueColor().CGColor
+        imgView.layer.borderWidth = 4
       
         self.contentView.addSubview(imgView)
         

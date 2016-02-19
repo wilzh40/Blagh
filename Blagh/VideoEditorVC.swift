@@ -54,7 +54,9 @@ class VideoEditorVC : UIViewController, UINavigationControllerDelegate, UIImageP
         self.player.didMoveToParentViewController(self)
         self.player.playbackLoops = true
         if !firstImage {
-            self.player.setUrl(NSURL(string:videoURL!)!)
+            let url = NSURL(fileURLWithPath: videoURL!)
+            print("\(url)")
+            self.player.setUrl(url)
             self.player.playFromBeginning()
             self.player.fillMode = "AVLayerVideoGravityResizeAspect"
             
@@ -103,8 +105,11 @@ class VideoEditorVC : UIViewController, UINavigationControllerDelegate, UIImageP
         
     }
     override func viewWillAppear(animated: Bool) {
-        self.player.setUrl(NSURL(string:videoURL!)!)
+        if !firstImage {
+            let url = NSURL(fileURLWithPath: videoURL!)
+        self.player.setUrl(url)
         player.playFromBeginning()
+        }
     }
     
     override func viewWillDisappear(animated : Bool) {
@@ -140,7 +145,9 @@ class VideoEditorVC : UIViewController, UINavigationControllerDelegate, UIImageP
        /* if (UIVideoAtPathIsCompatibleWithSavedPhotosAlbum (videoURL!)) {
             UISaveVideoAtPathToSavedPhotosAlbum (videoURL!, nil, nil, nil);
         }*/
-        player.setUrl(info[UIImagePickerControllerMediaURL] as! NSURL)
+        let url = info[UIImagePickerControllerMediaURL] as! NSURL
+        print(url)
+        player.setUrl(url)
         player.playFromBeginning()
 
         self.dismissViewControllerAnimated(true, completion:nil)

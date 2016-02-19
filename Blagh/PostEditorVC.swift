@@ -115,8 +115,7 @@ class PostEditorVC : GenericTable, UIImagePickerControllerDelegate, UINavigation
         case 1:
             
             let imageEditorVC = ImageEditorVC()
-            imageEditorVC.element = element as? PFObject
-            //imageEditorVC.imgView.image = cell.imgView.image
+            imageEditorVC.element = element             //imageEditorVC.imgView.image = cell.imgView.image
             imageEditorVC.firstImage = true
             self.navigationController?.pushViewController(imageEditorVC, animated: true)
 
@@ -145,8 +144,7 @@ class PostEditorVC : GenericTable, UIImagePickerControllerDelegate, UINavigation
             break
         case 2:
             let videoEditorVC = VideoEditorVC()
-            videoEditorVC.element = element as? PFObject
-            //imageEditorVC.imgView.image = cell.imgView.image
+            videoEditorVC.element = element             //imageEditorVC.imgView.image = cell.imgView.image
             videoEditorVC.firstImage = true
             self.navigationController?.pushViewController(videoEditorVC, animated: true)
             
@@ -169,20 +167,13 @@ class PostEditorVC : GenericTable, UIImagePickerControllerDelegate, UINavigation
             (success: Bool, error: NSError?) -> Void in
             if (success) {
                 print("Saved Element")
-                self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: self.tableData.count, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Automatic)
+                //self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: self.tableData.count, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Automatic)
             } else {
                 // There was a problem, check error.description
             }
         }
         
         self.tableView.reloadData()
-    }
-    
-    
-    override func viewDidAppear(animated: Bool) {
-        
-        tableView.reloadData()
-        
     }
     
     override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
@@ -231,14 +222,11 @@ class PostEditorVC : GenericTable, UIImagePickerControllerDelegate, UINavigation
         case 2:
             let cell = VideoCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "videoCell") as VideoCell
             if let str = element.valueForKey("video") as? String {
-                cell.videoURL = str
+                cell.videoURL = /*"file:///" + */str
                 cell.loadItem(str)
                 return cell
             }
-    
-           
 
-        
             /*
             let cell = SAScrollTableViewCell(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.width, 230))
 
