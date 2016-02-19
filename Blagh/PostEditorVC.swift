@@ -12,7 +12,7 @@ import Parse
 import HMSegmentedControl
 
 
-class PostEditorVC : GenericTable, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class PostEditorVC : GenericTable, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
     var segmentedControl : HMSegmentedControl?
     
     
@@ -52,11 +52,40 @@ class PostEditorVC : GenericTable, UIImagePickerControllerDelegate, UINavigation
         tableView.separatorStyle = .None
 
      
+        // Title for the blog
+        let textField = UITextField(frame: CGRect(x: 0, y: 0, width: UIScreen.mainScreen().bounds.width, height: 22))
+        if let currentPost: PFObject = Singleton.sharedInstance.currentPost {
+            textField.text = currentPost["title"] as? String
+            
+        }
+        textField.font = UIFont(name: "Futura", size: 19)
+        textField.textColor = UIColor.whiteColor()
+        textField.textAlignment = .Center
+        textField.delegate = self
+        textField.returnKeyType = UIReturnKeyType.Done
+
+        self.navigationItem.titleView = textField
+        
+
         
         //  SwiftSpinner.hide()
         
         
     }
+    
+    func textFieldDidEndEditing(textField: UITextField) {
+        if let currentPost: PFObject = Singleton.sharedInstance.currentPost {
+            currentPost["title"] = textField.text
+            currentPost.saveInBackground()
+            
+        }
+    }
+   
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
     override func saveData() {
         if let currentPost = Singleton.sharedInstance.currentPost {
             if let postElements : [PFObject] = currentPost["elements"] as? [PFObject]  {
