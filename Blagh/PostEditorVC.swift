@@ -15,8 +15,6 @@ import SAScrollTableViewCell
 
 class PostEditorVC : GenericTable, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
     var segmentedControl : HMSegmentedControl?
-
-    
     
     enum elementType: Int {
         case text
@@ -27,7 +25,6 @@ class PostEditorVC : GenericTable, UIImagePickerControllerDelegate, UINavigation
     override func viewDidLoad() {
         self.draggable = true
         super.viewDidLoad()
-        self.newPostAnimated = false
         if let currentPost = Singleton.sharedInstance.currentPost {
             Singleton.sharedInstance.loadElements()
             //tableData = NSMutableArray(array: (currentPost["elements"] as? [PFObject])!)
@@ -35,15 +32,18 @@ class PostEditorVC : GenericTable, UIImagePickerControllerDelegate, UINavigation
         
         SwiftSpinner.show("Loading Post")
         
+        // Setup segemented control
         segmentedControl = HMSegmentedControl(sectionTitles: ["Text","Image","Video"])
         let frame = UIScreen.mainScreen().bounds
         segmentedControl!.frame = CGRectMake(frame.minX, frame.maxY - 60,
             frame.width, 60)
         
-
+        
         self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 60, 0);
         
         view.addSubview(segmentedControl!)
+        
+        // Setup button
         
         let barButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: Selector("addElement"))
         self.navigationItem.setRightBarButtonItem(barButton, animated: true)
@@ -52,8 +52,8 @@ class PostEditorVC : GenericTable, UIImagePickerControllerDelegate, UINavigation
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 125.0
         tableView.separatorStyle = .None
-
-     
+        
+        
         // Title for the blog
         let textField = UITextField(frame: CGRect(x: 0, y: 0, width: UIScreen.mainScreen().bounds.width, height: 22))
         if let currentPost: PFObject = Singleton.sharedInstance.currentPost {
@@ -65,10 +65,10 @@ class PostEditorVC : GenericTable, UIImagePickerControllerDelegate, UINavigation
         textField.textAlignment = .Center
         textField.delegate = self
         textField.returnKeyType = UIReturnKeyType.Done
-
+        
         self.navigationItem.titleView = textField
         
-
+        
         
         //  SwiftSpinner.hide()
         
@@ -82,7 +82,7 @@ class PostEditorVC : GenericTable, UIImagePickerControllerDelegate, UINavigation
             
         }
     }
-   
+    
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
@@ -97,7 +97,7 @@ class PostEditorVC : GenericTable, UIImagePickerControllerDelegate, UINavigation
         }
         
     }
-  
+    
     override func viewWillDisappear(animated: Bool) {
         saveData()
     }
@@ -118,7 +118,7 @@ class PostEditorVC : GenericTable, UIImagePickerControllerDelegate, UINavigation
             imageEditorVC.element = element             //imageEditorVC.imgView.image = cell.imgView.image
             imageEditorVC.firstImage = true
             self.navigationController?.pushViewController(imageEditorVC, animated: true)
-
+            
             /*
             let url = NSURL(string: "https://upload.wikimedia.org/wikipedia/en/1/10/Apophysis-100303-104.jpg")
             let data = NSData(contentsOfURL: url!) //make sure your image in this url does exist, otherwise unwrap in a if let check
@@ -128,17 +128,17 @@ class PostEditorVC : GenericTable, UIImagePickerControllerDelegate, UINavigation
             imageFile.saveInBackground()
             element["image"] = imageFile
             /*UIImage.contentsOfURL(NSURL(string: "http://www.cosmicmind.io/CM/iTunesArtwork.png")!) { (image: UIImage?, error: NSError?) in
-                if let v: UIImage = image {
-                    let imageData = UIImagePNGRepresentation(image!)
-                    let imageFile = PFFile(name:"image.png", data:imageData!)! as PFFile
-                    element["image"] = imageFile
-                } else {
-                    let imageData = UIImagePNGRepresentation(UIImage(contentsOfFile: "MaterialBackground")!)
-                    let imageFile = PFFile(name:"image.png", data:imageData!)! as PFFile
-                    element["image"] = imageFile
-                }
+            if let v: UIImage = image {
+            let imageData = UIImagePNGRepresentation(image!)
+            let imageFile = PFFile(name:"image.png", data:imageData!)! as PFFile
+            element["image"] = imageFile
+            } else {
+            let imageData = UIImagePNGRepresentation(UIImage(contentsOfFile: "MaterialBackground")!)
+            let imageFile = PFFile(name:"image.png", data:imageData!)! as PFFile
+            element["image"] = imageFile
+            }
             }*/
-*/
+            */
             
             
             break
@@ -190,6 +190,9 @@ class PostEditorVC : GenericTable, UIImagePickerControllerDelegate, UINavigation
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int  {
         return tableData.count
     }
+    
+    // Cases: 0 for Text, 1 for Image, 2 for Video
+    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = ElementCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "elementCell")
         
@@ -210,11 +213,10 @@ class PostEditorVC : GenericTable, UIImagePickerControllerDelegate, UINavigation
                     if (error == nil && imageData != nil) {
                         let image = UIImage(data:imageData!)
                         cell.loadImage(image!)
-                        
                     }
                 })
             }
-
+            
             //cell.loadItem(element["text"] as! String)
             return cell
             break
@@ -226,21 +228,8 @@ class PostEditorVC : GenericTable, UIImagePickerControllerDelegate, UINavigation
                 cell.loadItem(str)
                 return cell
             }
-
-            /*
-            let cell = SAScrollTableViewCell(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.width, 230))
-
-            if let video = NSBundle.mainBundle().URLForResource(element.valueForKey("video") as? String, withExtension: "mov"){
-                cell.setMedia([SAScrollMedia.mediaWithType(SAScrollMediaType.VideoAsset, object: video)])
-                return cell
-
-            } else {
-                print("Error, can't load video")
-            }*/
-            
             break
-
-            //            break
+            
         default:
             break
             
@@ -265,7 +254,7 @@ class PostEditorVC : GenericTable, UIImagePickerControllerDelegate, UINavigation
             imageEditorVC.element = element as? PFObject
             imageEditorVC.imgView.image = cell.imgView.image
             imageEditorVC.firstImage = false
-             self.navigationController?.pushViewController(imageEditorVC, animated: true)
+            self.navigationController?.pushViewController(imageEditorVC, animated: true)
             break
         case 2:
             let cell = tableView.cellForRowAtIndexPath(indexPath) as! VideoCell
@@ -274,7 +263,7 @@ class PostEditorVC : GenericTable, UIImagePickerControllerDelegate, UINavigation
             videoEditorVC.videoURL = cell.videoURL
             videoEditorVC.firstImage = false
             self.navigationController?.pushViewController(videoEditorVC, animated: true)
-
+            
         default:
             break
         }
@@ -304,7 +293,7 @@ class PostEditorVC : GenericTable, UIImagePickerControllerDelegate, UINavigation
                 currentPost.saveInBackground()
             }
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-
+            
             //tableView.reloadData()
             
             

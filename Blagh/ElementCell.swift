@@ -11,7 +11,7 @@ import UIKit
 import MDHTMLLabel
 import AVFoundation
 import AVKit
-import Player
+import Material
 
 class ElementCell : UITableViewCell {
    // @IBOutlet var webView: UIWebView? = UIWebView()
@@ -147,8 +147,7 @@ class ImageCell: ElementCell {
 }
 
 
-class VideoCell: ElementCell, PlayerDelegate {
-    var player = Player()
+class VideoCell: ElementCell {
     let imgView = UIImageView()
     var videoURL: String?
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
@@ -194,7 +193,7 @@ class VideoCell: ElementCell, PlayerDelegate {
         self.clipsToBounds = true
         imgView.autoresizingMask = .None // I'm not sure if I have to change it
         imgView.layoutMargins = UIEdgeInsetsZero
-        imgView.layer.borderColor = UIColor.blueColor().CGColor
+        imgView.layer.borderColor = MaterialColor.indigo.lighten3.CGColor
         imgView.layer.borderWidth = 4
       
         self.contentView.addSubview(imgView)
@@ -214,13 +213,7 @@ class VideoCell: ElementCell, PlayerDelegate {
         self.view.addSubview(playerController.view)
         playerController.view.frame = self.view.frame
 */
-       // self.player = Player()
-        self.player.delegate = self
-        self.player.view.frame = self.contentView.bounds
-
-        //self.addChildViewController(self.player)
-        self.contentView.addSubview(self.player.view)
-        //self.player.didMoveToParentViewController(self)
+             //self.player.didMoveToParentViewController(self)
 
         //self.contentView.addSubview(videoPlayer)
         /*videoPlayer.leadingAnchor.constraintEqualToAnchor(contentView.trailingAnchor, constant: 8.0).active = true
@@ -230,20 +223,4 @@ class VideoCell: ElementCell, PlayerDelegate {
 
         
     }
-    func playerBufferingStateDidChange(player: Player) {
-        
-    }
-    func playerPlaybackDidEnd(player: Player) {
-        
-    }
-    func playerPlaybackStateDidChange(player: Player) {
-        
-    }
-    func playerPlaybackWillStartFromBeginning(player: Player) {
-        
-    }
-    func playerReady(player: Player) {
-        
-    }
-
 }
