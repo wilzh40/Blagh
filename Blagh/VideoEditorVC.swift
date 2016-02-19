@@ -157,10 +157,13 @@ class VideoEditorVC : UIViewController, UINavigationControllerDelegate, UIImageP
       func handleCameraButton() {
         var captureVC = CaptureVC()
         captureVC.delegate = self
+       
+
         
         
         //captureVC.captureView
         presentViewController(captureVC, animated: true, completion: nil)
+         captureVC.captureView.captureMode = .Video
         
     }
     
@@ -201,8 +204,12 @@ class VideoEditorVC : UIViewController, UINavigationControllerDelegate, UIImageP
     }
     
     func captureViewDidEnd(image: UIImage?, videoURL: NSURL?) {
+    
         if let url = videoURL {
             self.videoURL = url.path!
+            self.player.setUrl(videoURL!)
+            player.playFromBeginning()
+
         }
     }
     

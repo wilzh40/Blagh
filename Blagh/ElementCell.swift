@@ -185,9 +185,9 @@ class VideoCell: ElementCell, PlayerDelegate {
         let image = videoSnapshot(NSString(string: data))!//.resize(toWidth:200)
         imgView.image = image
         
-        imgView.contentMode = .ScaleAspectFit; //change later
+        imgView.contentMode = .ScaleAspectFill; //change later
         if (imgView.bounds.size.width > image.size.width && imgView.bounds.size.height > image.size.height) {
-            imgView.contentMode = UIViewContentMode.ScaleAspectFit
+            imgView.contentMode = UIViewContentMode.ScaleAspectFill
         }
         imgView.frame = AVMakeRectWithAspectRatioInsideRect(image.size, imgView.bounds);
         imgView.clipsToBounds = true

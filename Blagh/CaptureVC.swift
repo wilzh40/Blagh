@@ -109,7 +109,8 @@ class CaptureVC : UIViewController, CaptureViewDelegate, CaptureSessionDelegate 
      */
     func captureDidFinishRecordingToOutputFileAtURL(capture: CaptureSession, captureOutput: AVCaptureFileOutput, outputFileURL: NSURL, fromConnections connections: [AnyObject], error: NSError!) {
         print("Capture Stopped Recording \(outputFileURL)")
-        
+        self.delegate?.captureViewDidEnd!(nil, videoURL: outputFileURL)
+
         closeButton.hidden = false
         cameraButton.hidden = false
         videoButton.hidden = false
